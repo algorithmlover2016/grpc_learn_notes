@@ -1,2 +1,1 @@
-# grpc_learn_notes
-write down some notes when learning grpc
+write down some notes when learning some code or projects or courses
