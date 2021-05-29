@@ -1,0 +1,36 @@
+reference to https://grpc.io/docs/languages/cpp/quickstart/
+when build grpc, I encounter a error message:
+1. gRPC_ABSL_PROVIDER is "module" but ABSL_ROOT_DIR is wrong
+    Solution: reference to https://github.com/spack/spack/issues/15619 and https://github.com/spack/spack/pull/16052
+        under grpc folder, run the following command
+        git submodule update --init
+        and then cd ./cmake/build and run the following command
+    cmake -DgRPC_INSTALL=ON \
+          -DgRPC_BUILD_TESTS=OFF \
+          -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
+          ../..
+
+2. thirty-party of zlib git clone fail lead to cmake fail, just need to go to thirty-party/zlib and  git clone https://github.com/madler/zlib
+
+3. third_party/abseil-cpp compile fail because its CMakeList.txt need add one line, which is set(CMAKE_CXX_FLAGS "-std=c++11") at the begining.
+    reference to https://www.jianshu.com/p/08fdf54fbf43
+
+4. when install abseil-cpp, I encounter a issue:
+    CMake Error at cmake_install.cmake:53 (file):
+        file cannot create directory: /lib/cmake/absl.  Maybe need administrative privileges.
+   this is because I undef MY_INSTALL_DIR. Maybe u change the window, and at that window, u don't export MY_INSTALL_DIR
+5. how to set CMAKE_C_COMPILER:
+    reference to
+        https://stackoverflow.com/questions/11588855/how-do-you-set-cmake-c-compiler-and-cmake-cxx-compiler-for-building-assimp-for-i and
+        https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#how-do-i-use-a-different-compiler
+    Option 1:
+    cmake -D CMAKE_C_COMPILER="/path/to/your/c/compiler/executable" -D CMAKE_CXX_COMPILER "/path/to/your/cpp/compiler/executable" "/path/to/directory/containing/CMakeLists.txt"
+    Option 2:
+        export CC="/path/to/your/c/compiler/executable"
+        export CXX="/path/to/your/cpp/compiler/executable"
+    Option 3:
+        Edit the CMakeLists.txt file, and add:
+        set(CMAKE_C_COMPILER "/path/to/your/c/compiler/executable")
+        set(CMAKE_CXX_COMPILER "/path/to/your/cpp/compiler/executable")
+
+
