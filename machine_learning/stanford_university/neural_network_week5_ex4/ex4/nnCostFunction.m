@@ -23,7 +23,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
                  num_labels, (hidden_layer_size + 1));
 
 % Setup some useful variables
-m = size(X, 1)
+m = size(X, 1);
          
 % You need to return the following variables correctly 
 J = 0;
@@ -40,34 +40,37 @@ Theta2_grad = zeros(size(Theta2));
 %         computed in ex4.m
 
 % reference to https://blog.csdn.net/qq_35564813/article/details/79825230
+reference = true;
 
-for i = 1 : m
-    a1 = [1; X(i, :)'];
-    hypothesis1 = sigmoid(Theta1 * a1);
-    a2 = [1; hypothesis1];
-    hypothesis2 = sigmoid(Theta2 * a2);
-    yVec = zeros(num_labels, 1);
-    yVec(y(i)) = 1;
-    J = J + sum(yVec .* log(hypothesis2)  + (1 - yVec) .* log(1 - hypothesis2));
+if (~reference)
+    for i = 1 : m
+        a1 = [1; X(i, :)'];
+        hypothesis1 = sigmoid(Theta1 * a1);
+        a2 = [1; hypothesis1];
+        hypothesis2 = sigmoid(Theta2 * a2);
+        yVec = zeros(num_labels, 1);
+        yVec(y(i)) = 1;
+        J = J + sum(yVec .* log(hypothesis2)  + (1 - yVec) .* log(1 - hypothesis2));
+    end
+    lambdaDelta = lambda / 2 * (sum((Theta1(:, 2:end).^2)(:)) + sum((Theta2(:, 2:end).^2)(:)));
+    J = (-J + lambdaDelta) / m;
+else
+    a1 = [ones(m, 1), X];
+    z2 = Theta1 * a1';
+    % a2 = [ones(1, m); sigmoid(z2)];
+    a2 = [ones(m, 1), sigmoid(z2)'];
+    z3 = Theta2 * a2';
+    a3 = sigmoid(z3)';
+    h = a3;
+
+    yk = zeros(m, num_labels);
+    for i = 1 : m
+        yk(i, y(i)) = 1;
+    end
+    J = sum(sum((-yk) .* log(h) - (1 - yk) .* log(1 - h)))
+    deltaLambda = lambda / 2 * (sum(sum(Theta1(:, 2 : end) .^ 2)) + sum(sum(Theta2(:, 2 : end) .^ 2)));
+    J = (J + deltaLambda) / m;
 end
-lambdaDelta = lambda / 2 * (sum((Theta1.^2)(:)) + sum((Theta2.^2)(:)));
-J = (-J + lambdaDelta) / m;
-
-% a1 = [ones(m, 1), X];
-% z2 = Theta1 * a1';
-% % a2 = [ones(1, m); sigmoid(z2)];
-% a2 = [ones(m, 1), sigmoid(z2)'];
-% z3 = Theta2 * a2';
-% a3 = sigmoid(z3);
-% h = a3;
-%
-% yk = zeros(m, num_labels);
-% for i = 1 : m
-%     yk(i, y(i)) = 1;
-% end
-% J = sum(sum((-yk) .* log(h') - (1 - yk) .* log(1 - h')))
-% deltaLambda = lambda / 2 * (sum(sum(Theta1(:, 2 : end) .^ 2)) + sum(sum(Theta2(:, 2 : end) .^ 2)));
-% J = (J + deltaLambda) / m;
 
 
 %
@@ -86,25 +89,39 @@ J = (-J + lambdaDelta) / m;
 %               over the training examples if you are implementing it for the 
 %               first time.
 
-for i = 1 : m
-    z1 = X(i, :)';
-    a1 = [1; z1];
+if (~reference)
+    for i = 1 : m
+        z1 = X(i, :)';
+        a1 = [1; z1];
 
-    z2 = Theta1 * a1;
-    a2 = [1; sigmoid(z2)];
+        z2 = Theta1 * a1;
+        a2 = [1; sigmoid(z2)];
 
-    z3 = Theta2 * a2;
-    a3 = [sigmoid(z3)];
+        z3 = Theta2 * a2;
+        a3 = [sigmoid(z3)];
 
-    yy = a3;
-    yVec = zeros(num_labels, 1);
-    yVec(y(i)) = 1;
-    diff3 = yy - yVec;
-    Theta2_grad = Theta2_grad + diff3 * a2';
-    % diff2 = Theta2' * diff3 .* a2 .* (1 - a2);
-    % Theta1_grad = Theta1_grad + diff2(2: end) * a1';
-    diff2 = Theta2(:, 2: end)' * diff3 .* sigmoidGradient(z2) .* (1 - sigmoidGradient(z2));
-    Theta1_grad = Theta1_grad + diff2 * a1';
+        yy = a3;
+        yVec = zeros(num_labels, 1);
+        yVec(y(i)) = 1;
+        diff3 = yy - yVec;
+        Theta2_grad = Theta2_grad + diff3 * a2';
+        % diff2 = Theta2' * diff3 .* a2 .* (1 - a2);
+        % Theta1_grad = Theta1_grad + diff2(2: end) * a1';
+        diff2 = Theta2(:, 2: end)' * diff3 .* sigmoidGradient(z2) .* (1 - sigmoidGradient(z2));
+        Theta1_grad = Theta1_grad + diff2 * a1';
+    end
+else
+    for i = 1 : m
+        yy = h(i, :);
+        yVec = yk(i, :);
+
+        diff3 = (yy - yVec)';
+
+        Theta2_grad = Theta2_grad + diff3 * a2(i, :);
+
+        diff2 = Theta2(:, 2 : end)' * diff3 .* sigmoidGradient(z2(:, i));
+        Theta1_grad = Theta1_grad + diff2 * a1(i, :);
+    end
 end
 
 Theta1_grad = Theta1_grad ./ m;
