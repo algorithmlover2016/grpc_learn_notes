@@ -46,9 +46,27 @@ for i = 1 : m
     hypothesis2 = sigmoid(Theta2 * a2);
     yVec = zeros(num_labels, 1);
     yVec(y(i)) = 1;
-    J = J + yVec' * log10(hypothesis2)  + (1 - yVec') * log10(1 - hypothesis2);
+    J = J + sum(yVec .* log(hypothesis2)  + (1 - yVec) .* log(1 - hypothesis2));
+end
 lambdaDelta = lambda / 2 * (sum((Theta1.^2)(:)) + sum((Theta2.^2)(:)));
 J = (-J + lambdaDelta) / m;
+
+% a1 = [ones(m, 1), X];
+% z2 = Theta1 * a1';
+% % a2 = [ones(1, m); sigmoid(z2)];
+% a2 = [ones(m, 1), sigmoid(z2)'];
+% z3 = Theta2 * a2';
+% a3 = sigmoid(z3);
+% h = a3;
+%
+% yk = zeros(m, num_labels);
+% for i = 1 : m
+%     yk(i, y(i)) = 1;
+% end
+% J = sum(sum((-yk) .* log(h') - (1 - yk) .* log(1 - h')))
+% deltaLambda = lambda / 2 * (sum(sum(Theta1(:, 2 : end) .^ 2)) + sum(sum(Theta2(:, 2 : end) .^ 2)));
+% J = (J + deltaLambda) / m;
+
 
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
