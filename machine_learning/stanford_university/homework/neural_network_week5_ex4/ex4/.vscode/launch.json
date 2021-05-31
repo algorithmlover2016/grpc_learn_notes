@@ -2,6 +2,9 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
+    // reference to https://blog.csdn.net/wohu1104/article/details/111464778 and
+    // https://stackoverflow.com/questions/37332568/multiple-platforms-vscode-launch-json-config-slashes#37355192
     "version": "0.2.0",
     "configurations": [
         {
@@ -9,7 +12,12 @@
             "request": "launch",
             "name": "ex4.m",
             "program": "ex4.m",
-            "octave": "octave-cli.exe",
+            "windows": {
+                "octave": "octave-cli.exe",
+            },
+            "osx": {
+                "octave": "octave-cli",
+            },
             "sourceFolder": "${workspaceFolder}",
             "autoTerminate": true
         }
