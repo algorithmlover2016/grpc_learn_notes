@@ -40,7 +40,7 @@ Theta2_grad = zeros(size(Theta2));
 %         computed in ex4.m
 
 % reference to https://blog.csdn.net/qq_35564813/article/details/79825230
-reference = true;
+reference = false;
 
 if (~reference)
     for i = 1 : m
@@ -107,7 +107,7 @@ if (~reference)
         Theta2_grad = Theta2_grad + diff3 * a2';
         % diff2 = Theta2' * diff3 .* a2 .* (1 - a2);
         % Theta1_grad = Theta1_grad + diff2(2: end) * a1';
-        diff2 = Theta2(:, 2: end)' * diff3 .* sigmoidGradient(z2) .* (1 - sigmoidGradient(z2));
+        diff2 = Theta2(:, 2: end)' * diff3 .* sigmoidGradient(z2);
         Theta1_grad = Theta1_grad + diff2 * a1';
     end
 else
