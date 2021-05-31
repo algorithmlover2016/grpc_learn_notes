@@ -86,16 +86,34 @@ J = (-J + lambdaDelta) / m;
 %               over the training examples if you are implementing it for the 
 %               first time.
 
-% for i = 1 : m
-%     a1 = X(i, :)';
-%     a2 = sigmoid(Theta1 * [1; a1]);
-%     yy = sigmoid(Theta2 * [1; a2]);
-%     yVec = zeros(num_labels, 1);
-%     yVec(y) = 1;
-%     diff3 = yy - yVec;
-%     diff2 = Theta2' * diff3 .* a2 .* (1 - a2);
-%     Theta1_grad = Theta1_grad + diff2 * [1; a1]
-%     Theta2_grad = Theta2_grad + diff3 * [1; a2];
+for i = 1 : m
+    z1 = X(i, :)';
+    a1 = [1; z1];
+
+    z2 = Theta1 * a1;
+    a2 = [1; sigmoid(z2)];
+
+    z3 = Theta2 * a2;
+    a3 = [sigmoid(z3)];
+
+    yy = a3;
+    yVec = zeros(num_labels, 1);
+    yVec(y(i)) = 1;
+    diff3 = yy - yVec;
+    Theta2_grad = Theta2_grad + diff3 * a2';
+    % diff2 = Theta2' * diff3 .* a2 .* (1 - a2);
+    % Theta1_grad = Theta1_grad + diff2(2: end) * a1';
+    diff2 = Theta2(:, 2: end)' * diff3 .* sigmoidGradient(z2) .* (1 - sigmoidGradient(z2));
+    Theta1_grad = Theta1_grad + diff2 * a1';
+end
+
+Theta1_grad = Theta1_grad ./ m;
+Theta2_grad = Theta2_grad ./ m;
+
+Theta1(:, 1) = 0;
+Theta2(:, 1) = 0;
+Theta1_grad = Theta1_grad + lambda / m * Theta1;
+Theta2_grad = Theta2_grad + lambda / m * Theta2;
 
 %
 % Part 3: Implement regularization with the cost function and gradients.
