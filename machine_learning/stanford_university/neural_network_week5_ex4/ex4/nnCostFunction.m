@@ -39,6 +39,8 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 
+% reference to https://blog.csdn.net/qq_35564813/article/details/79825230
+
 for i = 1 : m
     a1 = [1; X(i, :)'];
     hypothesis1 = sigmoid(Theta1 * a1);
