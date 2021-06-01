@@ -52,12 +52,15 @@ error_val   = zeros(m, 1);
 %
 
 % ---------------------- Sample Solution ----------------------
+% reference to https://blog.csdn.net/qq_35564813/article/details/79831588
 
-
-
-
-
-
+    for i = 1 : m
+        % first, acoording to the i training set to get a theta
+        theta = trainLinearReg(X(1:i, :), y(1:i), lambda);
+        % second, compute the cost in training set and validation set
+        error_train(i) = linearRegCostFunction(X(1:i, :), y(1:i), theta, 0);
+        error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+    end
 
 % -------------------------------------------------------------
 
