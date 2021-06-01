@@ -7,8 +7,8 @@
         {
             "type": "OctaveDebugger",
             "request": "launch",
-            "name": "ex3.m",
-            "program": "ex3.m",
+            "name": "ex3_nn.m",
+            "program": "ex3_nn.m",
             "osx" :{
                 "octave": "octave-cli",
             },
