@@ -35,14 +35,14 @@ fprintf('Loading and Visualizing Data ...\n')
 load('ex3data1.mat'); % training data stored in arrays X, y
 m = size(X, 1);
 
-% Randomly select 100 data points to display
-rand_indices = randperm(m);
-sel = X(rand_indices(1:100), :);
-
-displayData(sel);
-
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+% % Randomly select 100 data points to display
+% rand_indices = randperm(m);
+% sel = X(rand_indices(1:100), :);
+% 
+% displayData(sel);
+% 
+% fprintf('Program paused. Press enter to continue.\n');
+% pause;
 
 %% ============ Part 2a: Vectorize Logistic Regression ============
 %  In this part of the exercise, you will reuse your logistic regression
@@ -53,7 +53,7 @@ pause;
 %
 
 % Test case for lrCostFunction
-fprintf('\nTesting lrCostFunction() with regularization');
+fprintf('\nTesting lrCostFunction() with regularization\n');
 
 theta_t = [-2; -1; 1; 2];
 X_t = [ones(5,1) reshape(1:15,5,3)/10];
