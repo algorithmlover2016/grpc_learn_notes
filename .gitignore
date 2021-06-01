@@ -31,3 +31,6 @@
 *.out
 *.app
 bin_output_*
+
+# token or password
+token.mat
