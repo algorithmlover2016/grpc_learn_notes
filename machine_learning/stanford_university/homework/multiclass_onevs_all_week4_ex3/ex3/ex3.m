@@ -35,15 +35,16 @@ fprintf('Loading and Visualizing Data ...\n')
 load('ex3data1.mat'); % training data stored in arrays X, y
 m = size(X, 1);
 
-% % Randomly select 100 data points to display
-% rand_indices = randperm(m);
-% sel = X(rand_indices(1:100), :);
-% 
-% displayData(sel);
-% 
-% fprintf('Program paused. Press enter to continue.\n');
-% pause;
+% Randomly select 100 data points to display
+rand_indices = randperm(m);
+sel = X(rand_indices(1:100), :);
 
+displayData(sel);
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+% reference to https://blog.csdn.net/qq_35564813/article/details/79825225 to get lrcostfunction and predict
 %% ============ Part 2a: Vectorize Logistic Regression ============
 %  In this part of the exercise, you will reuse your logistic regression
 %  code from the last exercise. You task here is to make sure that your
