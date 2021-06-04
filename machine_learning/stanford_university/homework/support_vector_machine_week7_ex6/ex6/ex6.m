@@ -18,6 +18,7 @@
 
 %% Initialization
 clear ; close all; clc
+% reference to https://blog.csdn.net/qq_35564813/article/details/79831597
 
 %% =============== Part 1: Loading and Visualizing Data ================
 %  We start the exercise by first loading and visualizing the dataset. 
@@ -34,8 +35,8 @@ load('ex6data1.mat');
 % Plot training data
 plotData(X, y);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+% fprintf('Program paused. Press enter to continue.\n');
+% pause;
 
 %% ==================== Part 2: Training Linear SVM ====================
 %  The following code will train a linear SVM on the dataset and plot the

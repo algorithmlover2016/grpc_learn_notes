@@ -78,7 +78,7 @@ dots = 12;
 while passes < max_passes,
             
     num_changed_alphas = 0;
-    for i = 1:m,
+    for i = 1:m
         
         % Calculate Ei = f(x(i)) - y(i) using (2). 
         % E(i) = b + sum (X(i, :) * (repmat(alphas.*Y,1,n).*X)') - Y(i);
