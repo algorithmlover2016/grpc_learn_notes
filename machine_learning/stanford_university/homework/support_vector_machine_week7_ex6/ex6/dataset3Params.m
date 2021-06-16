@@ -23,11 +23,19 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
-
-
-
-
-
+wid = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+errors = 0;
+for idxC = 1 : size(wid, 1)
+    for idxSigma = 1 : size(wid, 1)
+        model = svmTrain(X, y, wid(idxC), @(x1, x2) gaussianKernel(x1, x2, wid(idxSigma)));
+        predictions = svmPredict(model, Xval);
+        errors(idxC, idxSigma) = mean(double(predictions ~= yval));
+    end
+end
+minErr = min(min(errors));
+[idxC, idxSigma] = find(errors == minErr);
+C = wid(idxC);
+sigma = wid(idxSigma);
 
 % =========================================================================
 
