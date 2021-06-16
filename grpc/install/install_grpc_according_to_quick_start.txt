@@ -1,3 +1,6 @@
+install some dependencies by packages:
+    cmake  -DgRPC_INSTALL=ON -DgRPC_ZLIB_PROVIDER=package -DgRPC_CARES_PROVIDER=package -DgRPC_PROTOBUF_PROVIDER=package -DgRPC_SSL_PROVIDER=package ..
+    reference to https://www.cnblogs.com/jason1990/p/10381320.html
 reference to https://grpc.io/docs/languages/cpp/quickstart/
 when build grpc, I encounter a error message:
 1. gRPC_ABSL_PROVIDER is "module" but ABSL_ROOT_DIR is wrong
