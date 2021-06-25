@@ -19,11 +19,12 @@ S = zeros(n);
 % Note: When computing the covariance matrix, remember to divide by m (the
 %       number of examples).
 %
-
-
-
-
-
+% reference to https://www.cnblogs.com/geeksongs/p/11190295.html and
+%              https://www.zybuluo.com/EtoDemerzel/note/958976 and
+%              https://zhuanlan.zhihu.com/p/349802953
+% X(i,: ) is an input point, and mean(X(i, :)) = 0
+[U, S, V] = svd(1 / (m) * X' * X);
+% [U, S, V] = svd(1 / (m - 1) * X' * X);
 
 
 % =========================================================================

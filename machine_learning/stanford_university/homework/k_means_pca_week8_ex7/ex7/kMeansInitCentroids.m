@@ -13,7 +13,9 @@ centroids = zeros(K, size(X, 2));
 %               the dataset X
 %
 
-
+% reference to https://www.zybuluo.com/EtoDemerzel/note/958976
+randIdx = randperm(size(X, 1));
+centroids = X(randIdx(1:K), :);
 
 
 
