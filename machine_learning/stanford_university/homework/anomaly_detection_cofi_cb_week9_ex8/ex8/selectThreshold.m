@@ -24,16 +24,16 @@ for epsilon = min(pval):stepsize:max(pval)
     %       of 0's and 1's of the outlier predictions
 
 
-
-
-
-
-
-
-
-
-
-
+    predictions = (pval < epsilon);
+    % positive sample is predicted as true
+    tp = sum((predictions == 1) & (yval == 1));
+    % positive sample is predicted as false
+    fp = sum((predictions == 0) & (yval == 1));
+    % negtive sample is predicted as true
+    fn = sum((predictions == 1) & (yval == 0));
+    prec = tp / (tp + fp);
+    rec = tp / (tp + fn);
+    F1 = 2 * prec * rec / (prec + rec);
 
     % =============================================================
 

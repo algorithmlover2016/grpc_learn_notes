@@ -19,6 +19,7 @@
 %  You will start by loading the movie ratings dataset to understand the
 %  structure of the data.
 %  
+clear;clc;
 fprintf('Loading movie ratings dataset.\n\n');
 
 %  Load data
