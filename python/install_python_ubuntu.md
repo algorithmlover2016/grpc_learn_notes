@@ -16,3 +16,5 @@ python3.9 get-pip.py
 apt-get remove --auto-remove python3.x
 apt-get purge --auto-remove python3
 
+# install from source
+https://linoxide.com/install-python-3-9-on-ubuntu-20-04-lts/

@@ -1,0 +1,9 @@
+syntax enable
+set hlsearch
+set nu
+set cindent
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set autoindent
+set foldmethod=indent
