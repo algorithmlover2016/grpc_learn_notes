@@ -53,14 +53,45 @@ https://docs.ros.org/en/galactic/Installation/Ubuntu-Install-Binary.html
  empy
 
 # solve build error:
+# 8 packages had stderr output:
+    # foonathan_memory_vendor google_benchmark_vendor iceoryx_posh mimick_vendor qt_gui_cpp
+    # rmw_connextdds_common ros1_bridge rti_connext_dds_cmake_module
+
     # qt_gui_cpp
     apt install clang
     export CC=clang
     export CXX=clang++
-    colcon build --symlink-install --cmake-force-configure
 
     # rmw_connextdds_common
     # reference to https://docs.ros.org/en/galactic/Installation/DDS-Implementations.html
     apt install -q -y \
     rti-connext-dds-5.3.1
     cd /opt/rti.com/rti_connext_dds-5.3.1/resource/scripts && source ./rtisetenv_x64Linux3gcc5.4.0.bash; cd -
+    export CONNEXTDDS_DIR=${NDDSHOME}
+
+    colcon build --symlink-install --cmake-force-configure
+
+# ~/.bash_aliases
+export LANG=en_US.UTF-8
+# export CC=clang
+# export CXX=clang++
+# # if you want to install rti_connext_dds
+# if [ -f /opt/rti.com/rti_connext_dds-5.3.1/setenv_ros2rti.bash ]; then
+#     source /opt/rti.com/rti_connext_dds-5.3.1/setenv_ros2rti.bash > /dev/null
+#     export CONNEXTDDS_DIR=${NDDSHOME}
+# fi
+
+if [ -f ~/work_root/ros2_galactic/install/local_setup.bash  ]; then
+	source ~/work_root/ros2_galactic/install/local_setup.bash > /dev/null
+    export _colcon_cd_root=~/work_root/ros2_galactic
+	export ROS_DOMAIN_ID=0
+fi
+
+# update ros2
+# reference to https://docs.ros.org/en/galactic/Installation/Maintaining-a-Source-Checkout.html#maintainingsource
+
+# rmw implementations and change
+# https://docs.ros.org/en/galactic/Installation/DDS-Implementations.html
+# https://docs.ros.org/en/galactic/Guides/Working-with-multiple-RMW-implementations.html
+
+rosdep install --from-paths src --ignore-src --rosdistro galactic -y --skip-keys "console_bridge fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers"
