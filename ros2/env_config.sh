@@ -5,9 +5,12 @@ apt update && apt install -y ~nros-galactic-rqt*
 apt update && apt install -y ros-galactic-turtlesim
 
 # Understanding ROS 2 nodes
+# set default logging level
+ros2 run turtlesim turtlesim_node --ros-args --log-level WARN
 ros2 pkg executables turtlesim
 ros2 run turtlesim turtlesim_node
 ros2 run turtlesim turtle_teleop_key
+
 
 # list command
 ros2 node list
@@ -110,3 +113,28 @@ ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute "
 ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute "{'theta': 6}"
 # with feedback
 ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute "{theta: 1.57}" --feedback
+
+# using rqt_console
+ros2 run rqt_console rqt_console
+
+ros2 topic pub -r 1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}"
+
+# ros2 bag recording and replay data
+# ros2 topic list
+# ros2 topic echo <topic_name>
+# ros2 bag record <topic_name>
+ros2 bag record /turtle1/cmd_vel
+# recording multiple topics and specify the saved file
+ros2 bag record -o subset /turtle1/cmd_vel /turtle1/pose
+ros2 bag record -o subset -a # record all the topics excluded hidden topics except add --include-hidden-topics
+
+# ros2 bag info
+# ros2 bag info <bag_file_name>
+ros2 bag info subset
+
+# ros2 bag play
+# ros2 bag play <bag_file_name>
+ros2 bag play subset
+
+ros2 topic hz /turtle1/pose
+
