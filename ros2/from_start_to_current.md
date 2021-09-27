@@ -84,7 +84,7 @@ export CXX=clang++
 
 # set for ros2
 if [ -f ~/work_root/ros2_galactic/install/local_setup.bash  ]; then
-    source ~/work_root/ros2_galactic/install/local_setup.bash
+    source ~/work_root/ros2_galactic/install/setup.bash
 fi
 if [ -f /usr/share/colcon_cd/function/colcon_cd.sh ]; then
     source /usr/share/colcon_cd/function/colcon_cd.sh > /dev/null
