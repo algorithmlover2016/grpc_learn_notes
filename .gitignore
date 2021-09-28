@@ -34,3 +34,10 @@ bin_output_*
 
 # token or password
 token.mat
+
+# github repo
+machine_learning/ImageNetClassification_DCNN/AlexNet
+machine_learning/ImageNetClassification_DCNN/imagenet
+machine_learning/rcnn/Detectron
+machine_learning/rcnn/fast-rcnn
+
