@@ -7,3 +7,6 @@ set softtabstop=4
 set tabstop=4
 set autoindent
 set foldmethod=indent
+# git config --global core.autocrlf false $ --system --local
+# git config --global user.name
+# git config --global user.email
