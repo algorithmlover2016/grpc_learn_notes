@@ -6,6 +6,7 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set autoindent
+set expandtab # using 4 blank instead of tab
 set foldmethod=indent
 # git config --global core.autocrlf false $ --system --local
 # git config --global user.name
