@@ -1,5 +1,5 @@
 # reference to https://docs.ros.org/en/galactic/Tutorials/Writing-A-Simple-Cpp-Service-And-Client.html and
-# 
+# https://docs.ros.org/en/galactic/Tutorials/Writing-A-Simple-Py-Service-And-Client.html
 export work_root="~/work_root"
 export work_space="${work_root}/service_and_client/"
 mkdir -p ${work_space}/src && cd ${work_space}/src
