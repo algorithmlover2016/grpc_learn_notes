@@ -138,3 +138,6 @@ ros2 bag play subset
 
 ros2 topic hz /turtle1/pose
 
+# ros2doctor
+ros2 doctor
+ros2 doctor --report
