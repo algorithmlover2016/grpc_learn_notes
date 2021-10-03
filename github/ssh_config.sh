@@ -13,3 +13,7 @@ echo "Host github.com
     User algorithmlover2016
     IdentityFile ~/.ssh/id_ed25519_docker
     AddKeysToAgent yes" > ~/.ssh/config
+
+# config user.email and user.name
+git config --global user.email "yubo.upt@gmail.com"
+git config --global user.name "algorithmlover2016"
