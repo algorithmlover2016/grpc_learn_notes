@@ -20,3 +20,7 @@ git config --global core.safecrlf true # warn and false
 # Denote all files that are truly binary and should not be modified.
 *.png binary
 *.jpg binary
+
+git commit -m "Saving files before refreshing line endings"
+git add --renormalize .
+git commit -m "Normalize all the line endings"
