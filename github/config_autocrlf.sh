@@ -1,5 +1,5 @@
 # reference to http://kuanghy.github.io/2017/03/19/git-lf-or-crlf
-git config --global core.autocrlf false
+git config --global core.autocrlf false # input true
 git config --global core.safecrlf true # warn and false
 
 # .gitattributes reference to
