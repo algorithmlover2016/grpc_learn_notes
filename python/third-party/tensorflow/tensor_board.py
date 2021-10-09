@@ -1,12 +1,10 @@
 import datetime
 import platform
 import os
+import shutil
 import tensorflow as tf
 from tensorflow.keras import callbacks, optimizers
-TRAIN_USING_GIT = False
-RM_LOG_FOLDER = "rm -rf {}" # default platform is linux
-if platform.system().lower() == "windows":
-  RM_LOG_FOLDER = "rm -r {}"
+TRAIN_USING_GIT = True
 
 mnist = tf.keras.datasets.mnist
 (x_train, y_train) , (x_test, y_test) = mnist.load_data()
@@ -29,7 +27,7 @@ if TRAIN_USING_GIT:
   )
 
   log_dir_fit_root = "logs/fit/"
-  os.system(RM_LOG_FOLDER.format(log_dir_fit_root))
+  shutil.rmtree(log_dir_fit_root)
   log_dir_fit = log_dir_fit_root + datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
   tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir = log_dir_fit, histogram_freq = 1)
@@ -77,7 +75,8 @@ else:
 
   current_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
   tape_log_dir_root = "./logs/gradient_tape/"
-  os.system(RM_LOG_FOLDER.format(tape_log_dir_root))
+  shutil.rmtree(tape_log_dir_root)
+
   train_log_dir = tape_log_dir_root + current_time + "/train"
   test_log_dir = tape_log_dir_root + current_time + "/test"
   train_summary_writer = tf.summary.create_file_writer(train_log_dir)

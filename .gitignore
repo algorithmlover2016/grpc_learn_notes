@@ -41,3 +41,5 @@ machine_learning/ImageNetClassification_DCNN/imagenet
 machine_learning/rcnn/Detectron
 machine_learning/rcnn/fast-rcnn
 
+# logs file
+logs/
