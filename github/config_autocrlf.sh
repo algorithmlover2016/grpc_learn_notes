@@ -1,6 +1,6 @@
 # reference to http://kuanghy.github.io/2017/03/19/git-lf-or-crlf
 git config --global core.autocrlf false
-git config --global core.safecrlf true
+git config --global core.safecrlf true # warn and false
 
 # .gitattributes reference to
 # https://docs.github.com/cn/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
@@ -9,10 +9,10 @@ git config --global core.safecrlf true
 
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
-*.c text=lf
-*.h text=lf
-*.sh text=lf
-*.py text=lf
+*.c text eol=lf
+*.h text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
 
 # Declare files that will always have CRLF line endings on checkout.
 *.sln text eol=crlf
