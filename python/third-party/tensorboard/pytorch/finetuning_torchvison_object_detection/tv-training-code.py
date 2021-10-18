@@ -13,6 +13,8 @@ from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 from engine import train_one_epoch, evaluate
 import utils
 import transforms as T
+import pdb
+pdb.set_trace()
 
 
 class PennFudanDataset(object):
@@ -108,6 +110,25 @@ def get_transform(train):
         transforms.append(T.RandomHorizontalFlip(0.5))
     return T.Compose(transforms)
 
+def dict_to_tuple(output):
+    if isinstance(output, (list, tuple)):
+        if isinstance(output[0], dict):
+            return tuple([ele for e in output for ele in e.values()])
+        else:
+            return output
+    elif isinstance(output, dict):
+        return tuple([ele for ele in output.values()])
+    else:
+        return output
+
+class TraceWrapper(torch.nn.Module):
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+    
+    def forward(self, input, targets = None):
+        output = self.model(input, targets)
+        return dict_to_tuple(output)
 
 def main():
     # train on the GPU or on the CPU, if a GPU is not available
@@ -155,7 +176,7 @@ def main():
     print(logs_dir)
     from torch.utils.tensorboard import SummaryWriter
     writer = SummaryWriter(logs_dir)
-    writer.add_graph(model, torch.rand(1, 3, 224, 224))
+    writer.add_graph(TraceWrapper(model), torch.rand(1, 3, 224, 224))
     writer.close()
 
 

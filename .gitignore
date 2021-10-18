@@ -44,5 +44,8 @@ machine_learning/rcnn/fast-rcnn
 # logs file
 logs/
 
+# build output file
+__pycache__
+
 # download data
 data/
