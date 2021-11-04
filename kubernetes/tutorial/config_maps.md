@@ -529,7 +529,7 @@ EOF
     ```
 Add ConfigMap data to a specific path in the Volume:
 
-    ```
+```
     # Use the path field to specify the desired file path for specific ConfigMap items.
     cat <<EOF > ./pods/pod-configmap-volume-specific-key.yaml
     apiVersion: v1
@@ -553,4 +553,4 @@ Add ConfigMap data to a specific path in the Volume:
               path: keys
       restartPolicy: Never
 EOF
-    ```
+```
