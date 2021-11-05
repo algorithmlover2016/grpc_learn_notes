@@ -33,7 +33,7 @@ An empty string is treated as an Opaque type.
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.
 
 ### Opaque secrets:
-    When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.
+When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.
 
 ```
         # creates an empty Secret of type Opaque
@@ -41,8 +41,8 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
 ```
 
 ### Service account token Secrets:
-    When using this Secret type, you need to ensure that the kubernetes.io/service-account.name annotation is set to an existing service account name.
-    A Kubernetes controller fills in some other fields such as the kubernetes.io/service-account.uid annotation and the token key in the data field set to actual token content.
+When using this Secret type, you need to ensure that the kubernetes.io/service-account.name annotation is set to an existing service account name.
+A Kubernetes controller fills in some other fields such as the kubernetes.io/service-account.uid annotation and the token key in the data field set to actual token content.
 
 ```
         # declares a service account token Secret:
