@@ -4,7 +4,7 @@ To use a Secret, a Pod needs to reference the Secret. A Secret can be used with 
 * As container environment variable.<br>
 * By the kubelet when pulling images for the Pod.<br>
 
-**Caution**:
+**Caution**:<br>
 * The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***`stringData`*** field when creating a configuration file for a Secret.<br>
 * The ***data*** and the ***`stringData`*** fields are optional.<br>
 * The values for all keys in the ***data*** field have to be **base64-encoded** strings.<br>
@@ -98,7 +98,6 @@ type: kubernetes.io/basic-auth
 stringData:
   username: admin
   password: t0p-Secret
-
 ```
 ### SSH authentication secrets:
 When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the ***`data`*** (or ***`stringData`***) field as the SSH credential to use.<br>
@@ -114,7 +113,7 @@ data:
   ssh-privatekey: |
           MIIEpQIBAAKCAQEAulqb/Y ...
 ```
-***Caution:***
+* ***Caution:***<br>
 : SSH private keys do not establish trusted communication between an SSH client and host server on their own.<br>
 : A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a known_hosts file added to a ConfigMap.<br>
 
@@ -275,7 +274,6 @@ type: Opaque
 data:
   username: YWRtaW4=
   password: MWYyZDFlMmU2N2Rm
-
 ```
 ***Note:***<br>
 * The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names)
@@ -306,7 +304,6 @@ stringData:
     apiUrl: "https://my.api.com/api/v1"
     username: <user>
     password: <password>
-
 ```
 ***Note:***<br>
 * If a field, such as username, is specified in both ***`data`*** and ***`stringData`***, the value from ***`stringData`*** is used.
