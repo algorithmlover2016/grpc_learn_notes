@@ -113,9 +113,9 @@ data:
   ssh-privatekey: |
           MIIEpQIBAAKCAQEAulqb/Y ...
 ```
-* ***Caution:***<br>
-: SSH private keys do not establish trusted communication between an SSH client and host server on their own.<br>
-: A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a known_hosts file added to a ConfigMap.<br>
+***Caution:***<br>
+SSH private keys do not establish trusted communication between an SSH client and host server on their own.<br>
+A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a ***`known_hosts`*** file added to a ConfigMap.<br>
 
 ### TLS secrets:
 When using this type of Secret, the tls.key and the tls.crt key must be provided in the ***`data`*** (or ***`stringData`***) field of the Secret configuration, although the API server doesn't actually validate the values for each key.<br>
