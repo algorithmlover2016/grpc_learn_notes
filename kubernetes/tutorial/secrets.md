@@ -71,12 +71,12 @@ You can use one of the following type values to create a Secret to store the cre
         kubernetes.io/dockerconfigjson
 
 ```
-        Note: If you do not want to perform the base64 encoding, you can choose to use the stringData field instead.
-
-        When you create these types of Secrets using a manifest,
-        the API server checks whether the expected key does exists in the data field,
-        and it verifies if the value provided can be parsed as a valid JSON.
-        The API server doesn't validate if the JSON actually is a Docker config file.
+Note:
+    If you do not want to perform the base64 encoding, you can choose to use the stringData field instead.
+    When you create these types of Secrets using a manifest,
+    the API server checks whether the expected key does exists in the data field,
+    and it verifies if the value provided can be parsed as a valid JSON.
+    The API server doesn't validate if the JSON actually is a Docker config file.
 
 ```
         # use kubectl to create a Docker registry Secret, you can do:
