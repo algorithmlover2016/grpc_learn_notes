@@ -34,6 +34,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
 
 ### Opaque secrets:
     When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.
+
 ```
         # creates an empty Secret of type Opaque
         kubectl create secret generic empty-secret
