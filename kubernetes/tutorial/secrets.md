@@ -1,18 +1,18 @@
 # Secret consept(reference to https://kubernetes.io/docs/concepts/configuration/secret/)
-To use a Secret, a Pod needs to reference the Secret. A Secret can be used with a Pod in three ways:
-    As files in a volume mounted on one or more of its containers.
-    As container environment variable.
-    By the kubelet when pulling images for the Pod.
+To use a Secret, a Pod needs to reference the Secret. A Secret can be used with a Pod in three ways:<br>
+    As files in a volume mounted on one or more of its containers.<br>
+    As container environment variable.<br>
+    By the kubelet when pulling images for the Pod.<br>
 
-The name of a Secret object must be a valid DNS subdomain name. You can specify the "data" and/or the "stringData" field
-    when creating a configuration file for a Secret.
-The "data" and the "stringData" fields are optional.
-The values for all keys in the "data" field have to be base64-encoded strings. If the conversion to base64 string is not desirable,
-    you can choose to specify the stringData field instead, which accepts arbitrary strings as values.
+The name of a Secret object must be a valid DNS subdomain name. You can specify the "data" and/or the "stringData" field<br>
+    when creating a configuration file for a Secret.<br>
+The "data" and the "stringData" fields are optional.<br>
+The values for all keys in the "data" field have to be base64-encoded strings. If the conversion to base64 string is not desirable,<br>
+    you can choose to specify the stringData field instead, which accepts arbitrary strings as values.<br>
 
-The keys of "data" and "stringData" must consist of alphanumeric characters, -, _ or ..
-All key-value pairs in the "stringData" field are internally merged into the "data" field.
-If a key appears in both the "data" and the "stringData" field, the value specified in the "stringData" field takes precedence
+The keys of "data" and "stringData" must consist of alphanumeric characters, -, _ or ..<br>
+All key-value pairs in the "stringData" field are internally merged into the "data" field.<br>
+If a key appears in both the "data" and the "stringData" field, the value specified in the "stringData" field takes precedence<br>
 
 ## Types of Secret:
 
