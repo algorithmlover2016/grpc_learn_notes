@@ -65,7 +65,7 @@ You can use one of the following type values to create a Secret to store the cre
 
 ***Caution***:<br>
 * If you do not want to perform the **base64** encoding, you can choose to use the ***stringData*** field instead.<br>
-* When you create these types of Secrets using a manifest:
+* When you create these types of Secrets using a manifest:<br>
     the API server checks whether the expected key does exists in the data field.<br>
     and it verifies if the value provided can be parsed as a valid JSON.<br>
     The API server doesn't validate if the JSON actually is a Docker config file.<br>
@@ -83,11 +83,10 @@ When using this Secret type, the data field of the Secret must contain the follo
 ```
 username: the user name for authentication;
 password: the password or token for authentication.
-
 ```
 ***Note***:
-* Both values for the above two keys are **base64** encoded strings.
-* You can, of course, provide the clear text content using the stringData for Secret creation.
+    > Both values for the above two keys are **base64** encoded strings.<br>
+    > You can, of course, provide the clear text content using the stringData for Secret creation.<br>
 
 ```
 # an example config for a basic authentication Secret:
