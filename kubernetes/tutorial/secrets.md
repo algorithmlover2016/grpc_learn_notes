@@ -1,4 +1,4 @@
-# reference to https://kubernetes.io/docs/concepts/configuration/secret/
+# Secret consept(reference to https://kubernetes.io/docs/concepts/configuration/secret/)
 To use a Secret, a Pod needs to reference the Secret. A Secret can be used with a Pod in three ways:
     As files in a volume mounted on one or more of its containers.
     As container environment variable.
@@ -14,7 +14,8 @@ The keys of "data" and "stringData" must consist of alphanumeric characters, -, 
 All key-value pairs in the "stringData" field are internally merged into the "data" field.
 If a key appears in both the "data" and the "stringData" field, the value specified in the "stringData" field takes precedence
 
-Types of Secret:
+## Types of Secret:
+
 ```
     Builtin Type	                    Usage
     Opaque	                            arbitrary user-defined data
@@ -31,13 +32,14 @@ You can define and use your own Secret type by assigning a non-empty string as t
 An empty string is treated as an Opaque type.
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.
 
-    Opaque secrets:
+### Opaque secrets:
         When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.
 ```
         # creates an empty Secret of type Opaque
         kubectl create secret generic empty-secret
 ```
-    Service account token Secrets:
+
+### Service account token Secrets:
         When using this Secret type, you need to ensure that the kubernetes.io/service-account.name annotation is set to an existing service account name.
         A Kubernetes controller fills in some other fields such as the kubernetes.io/service-account.uid annotation and the token key in the data field set to actual token content.
 
@@ -54,7 +56,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           # You can include additional key value pairs as you do with Opaque Secrets
           extra: YmFyCg==
 ```
-    Docker config Secrets:
+### Docker config Secrets:
         You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.
 ```
         # The kubernetes.io/dockercfg type is reserved to store a serialized ~/.dockercfg which is the legacy format for configuring Docker command line.
@@ -83,7 +85,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           --docker-email=tiger@acme.com \
           --docker-server=my-registry.example:5000
 ```
-    Basic authentication Secret:
+### Basic authentication Secret:
         When using this Secret type, the data field of the Secret must contain the following two keys:
 ```
         username: the user name for authentication;
@@ -105,7 +107,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           password: t0p-Secret
 
 ```
-    SSH authentication secrets:
+### SSH authentication secrets:
         When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the data (or stringData) field as the SSH credential to use.
 ```
         # an example config for a SSH authentication Secret:
@@ -122,7 +124,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
         Caution: SSH private keys do not establish trusted communication between an SSH client and host server on their own.
                 A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a known_hosts file added to a ConfigMap.
 
-    TLS secrets:
+### TLS secrets:
         When using this type of Secret, the tls.key and the tls.crt key must be provided in the data (or stringData) field of the Secret configuration,
             although the API server doesn't actually validate the values for each key.
 ```
@@ -149,7 +151,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
         # The private key must be in what is commonly called PEM private key format, unencrypted.
         # In both cases, the initial and the last lines from PEM (for example, --------BEGIN CERTIFICATE----- and -------END CERTIFICATE---- for a certificate) are not included.
 ```
-    Bootstrap token Secrets:
+### Bootstrap token Secrets:
         A bootstrap token Secret is usually created in the kube-system namespace and named in the form bootstrap-token-<token-id> where <token-id> is a 6 character string of the token ID.
 ```
         # As a Kubernetes manifest, a bootstrap token Secret might look like the following:
