@@ -5,13 +5,13 @@ To use a Secret, a Pod needs to reference the Secret. A Secret can be used with 
 * By the kubelet when pulling images for the Pod.<br>
 
 **Caution**:
-* The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***stringData*** field when creating a configuration file for a Secret.<br>
-* The ***data*** and the ***stringData*** fields are optional.<br>
+* The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***`stringData`*** field when creating a configuration file for a Secret.<br>
+* The ***data*** and the ***`stringData`*** fields are optional.<br>
 * The values for all keys in the ***data*** field have to be **base64-encoded** strings.<br>
-* If the conversion to **base64** string is not desirable, you can choose to specify the ***stringData*** field instead, which accepts arbitrary strings as values.<br>
-* The keys of ***data*** and ***stringData*** must consist of alphanumeric characters, -, _ or ..<br>
-* All key-value pairs in the ***stringData*** field are internally merged into the ***data*** field.<br>
-* If a key appears in both the ***data*** and the ***stringData*** field, the value specified in the ***stringData*** field takes precedence<br>
+* If the conversion to **base64** string is not desirable, you can choose to specify the ***`stringData`*** field instead, which accepts arbitrary strings as values.<br>
+* The keys of ***data*** and ***`stringData`*** must consist of alphanumeric characters, -, _ or ..<br>
+* All key-value pairs in the ***`stringData`*** field are internally merged into the ***data*** field.<br>
+* If a key appears in both the ***data*** and the ***`stringData`*** field, the value specified in the ***`stringData`*** field takes precedence<br>
 
 ## Types of Secret:
 ```
@@ -26,19 +26,19 @@ kubernetes.io/tls	                data for a TLS client or server
 bootstrap.kubernetes.io/token	    bootstrap token data
 ```
 You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.<br>
-An empty string is treated as an ***Opaque*** type.<br>
+An empty string is treated as an ***`Opaque`*** type.<br>
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.<br>
 
 ### Opaque secrets:
-When you create a Secret using kubectl, you will use the generic subcommand to indicate an ***Opaque*** Secret type.<br>
+When you create a Secret using kubectl, you will use the generic subcommand to indicate an ***`Opaque`*** Secret type.<br>
 ```
 # creates an empty Secret of type Opaque
 kubectl create secret generic empty-secret
 ```
 
 ### Service account token Secrets:
-When using this Secret type, you need to ensure that the ***kubernetes.io/service-account.name*** annotation is set to an existing service account name.<br>
-A Kubernetes controller fills in some other fields such as the ***kubernetes.io/service-account.uid*** annotation and the token key in the data field set to actual token content.<br>
+When using this Secret type, you need to ensure that the ***`kubernetes.io/service-account.name`*** annotation is set to an existing service account name.<br>
+A Kubernetes controller fills in some other fields such as the ***`kubernetes.io/service-account.uid`*** annotation and the token key in the data field set to actual token content.<br>
 ```
 # declares a service account token Secret:
 apiVersion: v1
@@ -55,16 +55,16 @@ data:
 
 ### Docker config Secrets:
 You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.<br>
-* kubernetes.io/dockercfg<br>
-    The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.<br>
-    When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the **base64** format.<br>
+* ***`kubernetes.io/dockercfg`***<br>
+    The ***`kubernetes.io/dockercfg`*** type is reserved to store a serialized ***`~/.dockercfg`*** which is the legacy format for configuring Docker command line.<br>
+    When using this Secret type, you have to ensure the Secret data field contains a ***`.dockercfg`*** key whose value is content of a ***`~/.dockercfg`*** file encoded in the **`base64`** format.<br>
 
-* kubernetes.io/dockerconfigjson<br>
-    The ***kubernetes.io/dockerconfigjson*** type is designed for storing a serialized JSON that follows the same format rules as the ***~/.docker/config.json*** file, which is a new format for ***~/.dockercfg***.<br>
-    When using this Secret type, the data field of the Secret object must contain a ***.dockerconfigjson*** key, in which the content for the ***~/.docker/config.json*** file is provided as a **base64** encoded string.<br>
+* ***`kubernetes.io/dockerconfigjson`***<br>
+    The ***`kubernetes.io/dockerconfigjson`*** type is designed for storing a serialized JSON that follows the same format rules as the ***`~/.docker/config.json`*** file, which is a new format for ***`~/.dockercfg`***.<br>
+    When using this Secret type, the data field of the Secret object must contain a ***`.dockerconfigjson`*** key, in which the content for the ***`~/.docker/config.json`*** file is provided as a **`base64`** encoded string.<br>
 
 ***Caution***:<br>
-* If you do not want to perform the **base64** encoding, you can choose to use the `***stringData***` field instead.<br>
+* If you do not want to perform the **base64** encoding, you can choose to use the ***`stringData`*** field instead.<br>
 * When you create these types of Secrets using a manifest:<br>
     the API server checks whether the expected key does exists in the data field.<br>
     and it verifies if the value provided can be parsed as a valid JSON.<br>
@@ -86,7 +86,7 @@ password: the password or token for authentication.
 ```
 ***Note:***<br>
 Both values for the above two keys are **base64** encoded strings.<br>
-You can, of course, provide the clear text content using the `***stringData***` for Secret creation.<br>
+You can, of course, provide the clear text content using the ***`stringData`*** for Secret creation.<br>
 
 ```
 # an example config for a basic authentication Secret:
@@ -119,7 +119,7 @@ data:
 : A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a known_hosts file added to a ConfigMap.<br>
 
 ### TLS secrets:
-When using this type of Secret, the tls.key and the tls.crt key must be provided in the `***data***` (or `***stringData***`) field of the Secret configuration, although the API server doesn't actually validate the values for each key.<br>
+When using this type of Secret, the tls.key and the tls.crt key must be provided in the ***`data`*** (or ***`stringData`***) field of the Secret configuration, although the API server doesn't actually validate the values for each key.<br>
 ```
 # an example config for a TLS Secret
 apiVersion: v1
@@ -251,12 +251,12 @@ kubectl delete secret db-user-pass
 ### Create the Config file:
 You can create a Secret in a file first, in ***JSON*** or ***YAML*** format, and then create that object.<br>
 The Secret resource contains two maps:<br>
-* The `***data***` field is used to store arbitrary data, encoded using **base64**.
-data
-* The `***stringData***` field is provided for convenience, and it allows you to provide Secret data as unencoded strings.
-stringData.
+* data
+    The ***`data`*** field is used to store arbitrary data, encoded using **base64**.
+* stringData.
+    The ***`stringData`*** field is provided for convenience, and it allows you to provide Secret data as unencoded strings.
 ***Notes:***<br>
-* The keys of `***data***` and `***stringData***` must consist of alphanumeric characters, -, _ or ..<br>
+* The keys of ***`data`*** and ***`stringData`*** must consist of alphanumeric characters, -, _ or ..<br>
         
 ```
 # to store two strings in a Secret using the data field, convert the strings to **base64** as follows:
@@ -284,7 +284,7 @@ data:
 * When using the **base64** utility on Darwin/macOS, users should avoid using the -b option to split long lines.
 * Conversely, Linux users should add the option `-w 0` to **base64** commands or the pipeline `base64 | tr -d '\n'` if the -w option is not available.
 
-For certain scenarios, you may wish to use the `***stringData***` field instead.<br>
+For certain scenarios, you may wish to use the ***`stringData`*** field instead.<br>
 This field allows you to put a **non-base64** encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.<br>
 #### Configuration file demo:
 ```
@@ -309,7 +309,7 @@ stringData:
 
 ```
 ***Note:***<br>
-* If a field, such as username, is specified in both `***data***` and `*[stringData]*`, the value from stringData is used.
+* If a field, such as username, is specified in both ***`data`*** and ***`stringData`***, the value from ***`stringData`*** is used.
 
 ### Create the Secret object:
 ```
@@ -317,68 +317,67 @@ kubectl apply -f ./secret.yaml
 ```
 
 ### Check the Secret:
-Note: The stringData field is a write-only convenience field. It is never output when retrieving Secrets.
+***Note:***<br>
+The ***`stringData`*** field is a write-only convenience field. It is never output when retrieving Secrets.
 ```
-        kubectl get secret mysecret -o yaml
+kubectl get secret mysecret -o yaml
 ```
 
 ### Clean Up:
 ```
-        kubectl delete secret mysecret
+kubectl delete secret mysecret
 ```
 
 ## [Managing Secrets using Kustomize](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kustomize/)
 ### Create the Kustomization file:
-You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by
-```
-            referencing other existing files.
-            providing some literals
-            providing .env files
-```
+You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by<br>
+* referencing other existing files.<br>
+* providing some literals.<br>
+* providing .env files.<br>
 
 #### Demo:
 ```
-        # the following kustomization file references the ./username.txt and the ./password.txt files:
-        secretGenerator:
-        - name: db-user-pass
-          files:
-          - username.txt
-          - password.txt
+# the following kustomization file references the ./username.txt and the ./password.txt files:
+secretGenerator:
+- name: db-user-pass
+  files:
+  - username.txt
+  - password.txt
 
-        # the following kustomization.yaml file contains two literals for username and password respectively
-        secretGenerator:
-        - name: db-user-pass
-          literals:
-          - username=admin
-          - password=1f2d1e2e67df
+# the following kustomization.yaml file contains two literals for username and password respectively
+secretGenerator:
+- name: db-user-pass
+  literals:
+  - username=admin
+  - password=1f2d1e2e67df
 
-        #  the following kustomization.yaml file pulls in data from .env.secret file:
-        secretGenerator:
-        - name: db-user-pass
-          envs:
-          - .env.secret
+#  the following kustomization.yaml file pulls in data from .env.secret file:
+secretGenerator:
+- name: db-user-pass
+  envs:
+  - .env.secret
 ```
 
 ### Create the Secret:
 ```
-    # Apply the directory containing the kustomization.yaml to create the Secret.
-    kubectl apply -k .
+# Apply the directory containing the kustomization.yaml to create the Secret.
+kubectl apply -k .
 ```
 
 ### Check the Secret created:
 ```
-    # check that the secret was created
-    kubectl get secrets
-    # if The output is similar to:
-    # NAME                             TYPE                                  DATA      AGE
-    # db-user-pass-96mffmfh4k          Opaque                                2         51s
+# check that the secret was created
+kubectl get secrets
+# if The output is similar to:
+# NAME                             TYPE                                  DATA      AGE
+# db-user-pass-96mffmfh4k          Opaque                                2         51s
 
 
-    # view a description of the secret
-    kubectl describe secrets/db-user-pass-96mffmfh4k
+# view a description of the secret
+kubectl describe secrets/db-user-pass-96mffmfh4k
 ```
 
 ### Clean Up:
 ```
-    kubectl delete secret db-user-pass-96mffmfh4k
+kubectl delete secret db-user-pass-96mffmfh4k
 ```
