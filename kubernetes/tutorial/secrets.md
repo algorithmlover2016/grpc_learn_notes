@@ -39,31 +39,30 @@ kubectl create secret generic empty-secret
 ### Service account token Secrets:
 When using this Secret type, you need to ensure that the ***kubernetes.io/service-account.name*** annotation is set to an existing service account name.<br>
 A Kubernetes controller fills in some other fields such as the ***kubernetes.io/service-account.uid*** annotation and the token key in the data field set to actual token content.<br>
-    # declares a service account token Secret:
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: secret-sa-sample
-      annotations:
-        kubernetes.io/service-account.name: "sa-name"
-    type: kubernetes.io/service-account-token
-    data:
-      # You can include additional key value pairs as you do with Opaque Secrets
-      extra: YmFyCg==
+```
+# declares a service account token Secret:
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-sa-sample
+  annotations:
+    kubernetes.io/service-account.name: "sa-name"
+type: kubernetes.io/service-account-token
+data:
+  # You can include additional key value pairs as you do with Opaque Secrets
+  extra: YmFyCg==
+```
 
 ### Docker config Secrets:
 You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.<br>
-```
-   # The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.
-   # When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the base64 format.
-   * kubernetes.io/dockercfg
+* kubernetes.io/dockercfg<br>
+: The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.<br>
+: When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the base64 format.<br>
 
-   # The kubernetes.io/dockerconfigjson type is designed for storing a serialized JSON that follows the same format rules as the ~/.docker/config.json file
-   # which is a new format for ~/.dockercfg.
-   # When using this Secret type, the data field of the Secret object must contain a .dockerconfigjson key,
-   # in which the content for the ~/.docker/config.json file is provided as a base64 encoded string.
-   * kubernetes.io/dockerconfigjson
-```
+* kubernetes.io/dockerconfigjson<br>
+: The ***kubernetes.io/dockerconfigjson*** type is designed for storing a serialized JSON that follows the same format rules as the ***~/.docker/config.json*** file<br>
+: which is a new format for ***~/.dockercfg***.<br>
+: When using this Secret type, the data field of the Secret object must contain a ***.dockerconfigjson*** key, in which the content for the ***~/.docker/config.json*** file is provided as a base64 encoded string.<br>
 Note:
     If you do not want to perform the base64 encoding, you can choose to use the stringData field instead.
     When you create these types of Secrets using a manifest,
