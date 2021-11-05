@@ -1,8 +1,8 @@
 # [Secret consept](https://kubernetes.io/docs/concepts/configuration/secret/)
 To use a Secret, a Pod needs to reference the Secret. A Secret can be used with a Pod in three ways:<br>
-    * As files in a volume mounted on one or more of its containers.<br>
-    * As container environment variable.<br>
-    * By the kubelet when pulling images for the Pod.<br>
+* As files in a volume mounted on one or more of its containers.<br>
+* As container environment variable.<br>
+* By the kubelet when pulling images for the Pod.<br>
 
 **Caution**:
 * The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***stringData*** field when creating a configuration file for a Secret.<br>
@@ -14,23 +14,27 @@ To use a Secret, a Pod needs to reference the Secret. A Secret can be used with 
 * If a key appears in both the ***data*** and the ***stringData*** field, the value specified in the ***stringData*** field takes precedence<br>
 
 ## Types of Secret:
-    Builtin Type	                    Usage
-    Opaque	                            arbitrary user-defined data
-    kubernetes.io/service-account-token	service account token
-    kubernetes.io/dockercfg	            serialized ~/.dockercfg file
-    kubernetes.io/dockerconfigjson	    serialized ~/.docker/config.json file
-    kubernetes.io/basic-auth	        credentials for basic authentication
-    kubernetes.io/ssh-auth	            credentials for SSH authentication
-    kubernetes.io/tls	                data for a TLS client or server
-    bootstrap.kubernetes.io/token	    bootstrap token data
+```
+Builtin Type	                    Usage
+Opaque	                            arbitrary user-defined data
+kubernetes.io/service-account-token	service account token
+kubernetes.io/dockercfg	            serialized ~/.dockercfg file
+kubernetes.io/dockerconfigjson	    serialized ~/.docker/config.json file
+kubernetes.io/basic-auth	        credentials for basic authentication
+kubernetes.io/ssh-auth	            credentials for SSH authentication
+kubernetes.io/tls	                data for a TLS client or server
+bootstrap.kubernetes.io/token	    bootstrap token data
+```
 You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.<br>
 An empty string is treated as an Opaque type.<br>
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.<br>
 
 ### Opaque secrets:
 When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.<br>
-    # creates an empty Secret of type Opaque
-    kubectl create secret generic empty-secret
+```
+# creates an empty Secret of type Opaque
+kubectl create secret generic empty-secret
+```
 
 ### Service account token Secrets:
 When using this Secret type, you need to ensure that the ***kubernetes.io/service-account.name*** annotation is set to an existing service account name.<br>
