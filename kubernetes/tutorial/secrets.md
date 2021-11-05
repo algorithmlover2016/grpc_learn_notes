@@ -26,6 +26,7 @@ Types of Secret:
     kubernetes.io/tls	                data for a TLS client or server
     bootstrap.kubernetes.io/token	    bootstrap token data
 ```
+
 You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.
 An empty string is treated as an Opaque type.
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.
@@ -74,14 +75,14 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
         and it verifies if the value provided can be parsed as a valid JSON.
         The API server doesn't validate if the JSON actually is a Docker config file.
 
-        ```
+```
         # use kubectl to create a Docker registry Secret, you can do:
         kubectl create secret docker-registry secret-tiger-docker \
           --docker-username=tiger \
           --docker-password=pass113 \
           --docker-email=tiger@acme.com \
           --docker-server=my-registry.example:5000
-        ```
+```
     Basic authentication Secret:
         When using this Secret type, the data field of the Secret must contain the following two keys:
 ```
@@ -92,7 +93,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
         You can, of course, provide the clear text content using the stringData for Secret creation.
 ```
 
-        ```
+```
         # an example config for a basic authentication Secret:
         apiVersion: v1
         kind: Secret
@@ -103,7 +104,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           username: admin
           password: t0p-Secret
 
-        ```
+```
     SSH authentication secrets:
         When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the data (or stringData) field as the SSH credential to use.
 ```
@@ -124,7 +125,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
     TLS secrets:
         When using this type of Secret, the tls.key and the tls.crt key must be provided in the data (or stringData) field of the Secret configuration,
             although the API server doesn't actually validate the values for each key.
-        ```
+```
         # an example config for a TLS Secret
         apiVersion: v1
         kind: Secret
@@ -137,7 +138,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
                 MIIC2DCCAcCgAwIBAgIBATANBgkqh ...
           tls.key: |
                 MIIEpgIBAAKCAQEA7yn3bRHQ5FHMQ ...
-        ```
+```
         When creating a TLS Secret using kubectl, you can use the tls subcommand as shown in the following example:
 ```
         kubectl create secret tls my-tls-secret \
@@ -150,7 +151,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
 ```
     Bootstrap token Secrets:
         A bootstrap token Secret is usually created in the kube-system namespace and named in the form bootstrap-token-<token-id> where <token-id> is a 6 character string of the token ID.
-        ```
+```
         # As a Kubernetes manifest, a bootstrap token Secret might look like the following:
         apiVersion: v1
         kind: Secret
@@ -165,20 +166,20 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           token-secret: a3E0Z2lodnN6emduMXAwcg==
           usage-bootstrap-authentication: dHJ1ZQ==
           usage-bootstrap-signing: dHJ1ZQ==
-        ```
+```
 
         A bootstrap type Secret has the following keys specified under data:
-        ```
+```
         token-id: A random 6 character string as the token identifier. Required.
         token-secret: A random 16 character string as the actual token secret. Required.
         description: A human-readable string that describes what the token is used for. Optional.
         expiration: An absolute UTC time using RFC3339 specifying when the token should be expired. Optional.
         usage-bootstrap-<usage>: A boolean flag indicating additional usage for the bootstrap token.
         auth-extra-groups: A comma-separated list of group names that will be authenticated as in addition to the system:bootstrappers group.
-        ```
+```
 
         The above YAML may look confusing because the values are all in base64 encoded strings. In fact, you can create an identical Secret using the following YAML:
-        ```
+```
         apiVersion: v1
         kind: Secret
         metadata:
@@ -197,11 +198,11 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           usage-bootstrap-authentication: "true"
           # and it can be used for signing
           usage-bootstrap-signing: "true"
-        ```
+```
 
 ## Managing Secrets using kubectl (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
     Create a Secret:
-        ```
+```
         # a database connection string consists of a username and password.
         # You can store the username in a file ./username.txt and the password in a file ./password.txt on your local machine.
 
@@ -232,41 +233,41 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
         kubectl create secret generic db-user-pass \
           --from-literal=username=devuser \
           --from-literal=password='S!B\*d$zDsb='
-        ```
+```
     Verify the Secret:
-    ```
+```
         # Check that the Secret was created
         kubectl get secrets
 
         # view a description of the Secret:
         kubectl describe secrets/db-user-pass
-    ```
+```
     Decoding the Secret:
-    ```
+```
         # To view the contents of the Secret you created, run the following command:
         kubectl get secret db-user-pass -o jsonpath='{.data}'
 
         # decode the password data, if The output is similar to: {"password":"MWYyZDFlMmU2N2Rm","username":"YWRtaW4="}
         echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
-    ```
+```
     Clean Up:
-    ```
+```
     kubectl delete secret db-user-pass
-    ```
+```
 
 ## Managing Secrets using Configuration File (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-config-file/)
     Create the Config file:
         You can create a Secret in a file first, in JSON or YAML format, and then create that object.
         The Secret resource contains two maps:
-        ```
+```
             # The data field is used to store arbitrary data, encoded using base64.
             data
             # The stringData field is provided for convenience, and it allows you to provide Secret data as unencoded strings.
             stringData.
-        ```
+```
         Notes: The keys of data and stringData must consist of alphanumeric characters, -, _ or ..
         
-        ```
+```
         # to store two strings in a Secret using the data field, convert the strings to base64 as follows:
         echo -n 'admin' | base64
         # The output is similar to: YWRtaW4=
@@ -285,22 +286,22 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
           password: MWYyZDFlMmU2N2Rm
 
         # Note that the name of a Secret object must be a valid DNS subdomain name.
-        ```
+```
 
         Note:
-        ```
+```
             The serialized JSON and YAML values of Secret data are encoded as base64 strings.
             Newlines are not valid within these strings and must be omitted.
             When using the base64 utility on Darwin/macOS, users should avoid using the -b option to split long lines.
             Conversely, Linux users should add the option -w 0(zero) to base64 commands or the pipeline base64 | tr -d '\n' if the -w option is not available.
-        ```
+```
 
         For certain scenarios, you may wish to use the stringData field instead.
         This field allows you to put a non-base64 encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.
 
 
         Configuration file demo:
-        ```
+```
         # if your application uses the following configuration file:
         apiUrl: "https://my.api.com/api/v1"
         username: "<user>"
@@ -321,34 +322,34 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
             password: <password>
 
         # Note: If a field, such as username, is specified in both data and stringData, the value from stringData is used.
-        ```
+```
     Create the Secret object:
-    ```
+```
         kubectl apply -f ./secret.yaml
-    ```
+```
 
     Check the Secret:
         Note: The stringData field is a write-only convenience field. It is never output when retrieving Secrets.
-    ```
+```
         kubectl get secret mysecret -o yaml
-    ```
+```
 
     Clean Up:
-    ```
+```
         kubectl delete secret mysecret
-    ```
+```
 
 ## Managing Secrets using Kustomize (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kustomize/)
     Create the Kustomization file:
         You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by
-        ```
+```
             referencing other existing files.
             providing some literals
             providing .env files
-        ```
+```
 
         Demo:
-        ```
+```
         # the following kustomization file references the ./username.txt and the ./password.txt files:
         secretGenerator:
         - name: db-user-pass
@@ -368,16 +369,16 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
         - name: db-user-pass
           envs:
           - .env.secret
-        ```
+```
 
     Create the Secret:
-    ```
+```
     # Apply the directory containing the kustomization.yaml to create the Secret.
     kubectl apply -k .
-    ```
+```
 
     Check the Secret created:
-    ```
+```
     # check that the secret was created
     kubectl get secrets
     # if The output is similar to:
@@ -387,9 +388,9 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
 
     # view a description of the secret
     kubectl describe secrets/db-user-pass-96mffmfh4k
-    ```
+```
 
     Clean Up:
-    ```
+```
     kubectl delete secret db-user-pass-96mffmfh4k
-    ```
+```
