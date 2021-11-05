@@ -56,19 +56,19 @@ data:
 ### Docker config Secrets:
 You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.<br>
 * kubernetes.io/dockercfg<br>
-    * The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.<br>
-    * When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the **base64** format.<br>
+    The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.<br>
+    When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the **base64** format.<br>
 
 * kubernetes.io/dockerconfigjson<br>
-    * The ***kubernetes.io/dockerconfigjson*** type is designed for storing a serialized JSON that follows the same format rules as the ***~/.docker/config.json*** file, which is a new format for ***~/.dockercfg***.<br>
-    * When using this Secret type, the data field of the Secret object must contain a ***.dockerconfigjson*** key, in which the content for the ***~/.docker/config.json*** file is provided as a **base64** encoded string.<br>
+    The ***kubernetes.io/dockerconfigjson*** type is designed for storing a serialized JSON that follows the same format rules as the ***~/.docker/config.json*** file, which is a new format for ***~/.dockercfg***.<br>
+    When using this Secret type, the data field of the Secret object must contain a ***.dockerconfigjson*** key, in which the content for the ***~/.docker/config.json*** file is provided as a **base64** encoded string.<br>
 
 ***Caution***:<br>
 * If you do not want to perform the **base64** encoding, you can choose to use the ***stringData*** field instead.<br>
 * When you create these types of Secrets using a manifest:
-    * the API server checks whether the expected key does exists in the data field.<br>
-    * and it verifies if the value provided can be parsed as a valid JSON.<br>
-    * The API server doesn't validate if the JSON actually is a Docker config file.<br>
+    the API server checks whether the expected key does exists in the data field.<br>
+    and it verifies if the value provided can be parsed as a valid JSON.<br>
+    The API server doesn't validate if the JSON actually is a Docker config file.<br>
 
 ```
 # use kubectl to create a Docker registry Secret, you can do:
