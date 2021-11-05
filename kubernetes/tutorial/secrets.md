@@ -86,8 +86,8 @@ username: the user name for authentication;
 password: the password or token for authentication.
 ```
 ***Note:***<br>
-Both values for the above two keys are **base64** encoded strings.<br>
-You can, of course, provide the clear text content using the ***`stringData`*** for Secret creation.<br>
+* Both values for the above two keys are **base64** encoded strings.<br>
+* You can, of course, provide the clear text content using the ***`stringData`*** for Secret creation.<br>
 
 ```
 # an example config for a basic authentication Secret:
@@ -116,8 +116,8 @@ data:
           MIIEpQIBAAKCAQEAulqb/Y ...
 ```
 ***Caution:***<br>
-SSH private keys do not establish trusted communication between an SSH client and host server on their own.<br>
-A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a ***`known_hosts`*** file added to a ConfigMap.<br>
+* SSH private keys do not establish trusted communication between an SSH client and host server on their own.<br>
+* A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a ***`known_hosts`*** file added to a ConfigMap.<br>
 
 ### TLS secrets:
 When using this type of Secret, the tls.key and the tls.crt key must be provided in the ***`data`*** (or ***`stringData`***) field of the Secret configuration, although the API server doesn't actually validate the values for each key.<br>
@@ -324,7 +324,7 @@ kubectl apply -f ./secret.yaml
 
 ### Check the Secret:
 ***Note:***<br>
-The ***`stringData`*** field is a write-only convenience field. It is never output when retrieving Secrets.
+* The ***`stringData`*** field is a write-only convenience field. It is never output when retrieving Secrets.
 ```
 kubectl get secret mysecret -o yaml
 ```
