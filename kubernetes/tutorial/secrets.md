@@ -84,9 +84,9 @@ When using this Secret type, the data field of the Secret must contain the follo
 username: the user name for authentication;
 password: the password or token for authentication.
 ```
-***Note***:
-    > Both values for the above two keys are **base64** encoded strings.<br>
-    > You can, of course, provide the clear text content using the stringData for Secret creation.<br>
+***Note:***
+    Both values for the above two keys are **base64** encoded strings.<br>
+    You can, of course, provide the clear text content using the stringData for Secret creation.<br>
 
 ```
 # an example config for a basic authentication Secret:
