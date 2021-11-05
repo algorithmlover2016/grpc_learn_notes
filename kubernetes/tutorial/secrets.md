@@ -6,16 +6,14 @@ To use a Secret, a Pod needs to reference the Secret. A Secret can be used with 
 
 **Caution**:
 * The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***stringData*** field when creating a configuration file for a Secret.<br>
-* The "data" and the "stringData" fields are optional.<br>
-* The values for all keys in the "data" field have to be base64-encoded strings.<br>
-* If the conversion to base64 string is not desirable, you can choose to specify the stringData field instead, which accepts arbitrary strings as values.<br>
+* The ***data*** and the ***stringData*** fields are optional.<br>
+* The values for all keys in the ***data*** field have to be base64-encoded strings.<br>
+* If the conversion to base64 string is not desirable, you can choose to specify the ***stringData*** field instead, which accepts arbitrary strings as values.<br>
 * The keys of ***data*** and ***stringData*** must consist of alphanumeric characters, -, _ or ..<br>
 * All key-value pairs in the ***stringData*** field are internally merged into the ***data*** field.<br>
 * If a key appears in both the ***data*** and the ***stringData*** field, the value specified in the ***stringData*** field takes precedence<br>
 
 ## Types of Secret:
-
-```
     Builtin Type	                    Usage
     Opaque	                            arbitrary user-defined data
     kubernetes.io/service-account-token	service account token
@@ -25,15 +23,12 @@ To use a Secret, a Pod needs to reference the Secret. A Secret can be used with 
     kubernetes.io/ssh-auth	            credentials for SSH authentication
     kubernetes.io/tls	                data for a TLS client or server
     bootstrap.kubernetes.io/token	    bootstrap token data
-```
-
 You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.<br>
 An empty string is treated as an Opaque type.<br>
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.<br>
 
 ### Opaque secrets:
 When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.<br>
-
     # creates an empty Secret of type Opaque
     kubectl create secret generic empty-secret
 
@@ -54,6 +49,7 @@ A Kubernetes controller fills in some other fields such as the ***kubernetes.io/
 
 ### Docker config Secrets:
 You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.<br>
+```
    # The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.
    # When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the base64 format.
    * kubernetes.io/dockercfg
@@ -63,6 +59,7 @@ You can use one of the following type values to create a Secret to store the cre
    # When using this Secret type, the data field of the Secret object must contain a .dockerconfigjson key,
    # in which the content for the ~/.docker/config.json file is provided as a base64 encoded string.
    * kubernetes.io/dockerconfigjson
+```
 Note:
     If you do not want to perform the base64 encoding, you can choose to use the stringData field instead.
     When you create these types of Secrets using a manifest,
