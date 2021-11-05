@@ -7,8 +7,8 @@ To use a Secret, a Pod needs to reference the Secret. A Secret can be used with 
 **Caution**:
 * The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***stringData*** field when creating a configuration file for a Secret.<br>
 * The ***data*** and the ***stringData*** fields are optional.<br>
-* The values for all keys in the ***data*** field have to be base64-encoded strings.<br>
-* If the conversion to base64 string is not desirable, you can choose to specify the ***stringData*** field instead, which accepts arbitrary strings as values.<br>
+* The values for all keys in the ***data*** field have to be **base64-encoded** strings.<br>
+* If the conversion to **base64** string is not desirable, you can choose to specify the ***stringData*** field instead, which accepts arbitrary strings as values.<br>
 * The keys of ***data*** and ***stringData*** must consist of alphanumeric characters, -, _ or ..<br>
 * All key-value pairs in the ***stringData*** field are internally merged into the ***data*** field.<br>
 * If a key appears in both the ***data*** and the ***stringData*** field, the value specified in the ***stringData*** field takes precedence<br>
@@ -56,47 +56,49 @@ data:
 ### Docker config Secrets:
 You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.<br>
 * kubernetes.io/dockercfg<br>
-: The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.<br>
-: When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the base64 format.<br>
+    * The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.<br>
+    * When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the **base64** format.<br>
 
-kubernetes.io/dockerconfigjson<br>
-: The ***kubernetes.io/dockerconfigjson*** type is designed for storing a serialized JSON that follows the same format rules as the ***~/.docker/config.json*** file, which is a new format for ***~/.dockercfg***.<br>
-: When using this Secret type, the data field of the Secret object must contain a ***.dockerconfigjson*** key, in which the content for the ***~/.docker/config.json*** file is provided as a base64 encoded string.<br>
-Note:
-    If you do not want to perform the base64 encoding, you can choose to use the stringData field instead.
-    When you create these types of Secrets using a manifest,
-    the API server checks whether the expected key does exists in the data field,
-    and it verifies if the value provided can be parsed as a valid JSON.
-    The API server doesn't validate if the JSON actually is a Docker config file.
+* kubernetes.io/dockerconfigjson<br>
+    * The ***kubernetes.io/dockerconfigjson*** type is designed for storing a serialized JSON that follows the same format rules as the ***~/.docker/config.json*** file, which is a new format for ***~/.dockercfg***.<br>
+    * When using this Secret type, the data field of the Secret object must contain a ***.dockerconfigjson*** key, in which the content for the ***~/.docker/config.json*** file is provided as a **base64** encoded string.<br>
+
+***Caution***:<br>
+* If you do not want to perform the **base64** encoding, you can choose to use the ***stringData*** field instead.<br>
+* When you create these types of Secrets using a manifest:
+    * the API server checks whether the expected key does exists in the data field.<br>
+    * and it verifies if the value provided can be parsed as a valid JSON.<br>
+    * The API server doesn't validate if the JSON actually is a Docker config file.<br>
 
 ```
-        # use kubectl to create a Docker registry Secret, you can do:
-        kubectl create secret docker-registry secret-tiger-docker \
-          --docker-username=tiger \
-          --docker-password=pass113 \
-          --docker-email=tiger@acme.com \
-          --docker-server=my-registry.example:5000
+# use kubectl to create a Docker registry Secret, you can do:
+kubectl create secret docker-registry secret-tiger-docker \
+  --docker-username=tiger \
+  --docker-password=pass113 \
+  --docker-email=tiger@acme.com \
+  --docker-server=my-registry.example:5000
 ```
 ### Basic authentication Secret:
-When using this Secret type, the data field of the Secret must contain the following two keys:
+When using this Secret type, the data field of the Secret must contain the following two keys:<br>
 ```
-        username: the user name for authentication;
-        password: the password or token for authentication.
-
-        Note:Both values for the above two keys are base64 encoded strings.
-        You can, of course, provide the clear text content using the stringData for Secret creation.
-```
+username: the user name for authentication;
+password: the password or token for authentication.
 
 ```
-        # an example config for a basic authentication Secret:
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: secret-basic-auth
-        type: kubernetes.io/basic-auth
-        stringData:
-          username: admin
-          password: t0p-Secret
+***Note***:
+* Both values for the above two keys are **base64** encoded strings.
+* You can, of course, provide the clear text content using the stringData for Secret creation.
+
+```
+# an example config for a basic authentication Secret:
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-basic-auth
+type: kubernetes.io/basic-auth
+stringData:
+  username: admin
+  password: t0p-Secret
 
 ```
 ### SSH authentication secrets:
@@ -172,7 +174,7 @@ A bootstrap type Secret has the following keys specified under data:
         auth-extra-groups: A comma-separated list of group names that will be authenticated as in addition to the system:bootstrappers group.
 ```
 
-The above YAML may look confusing because the values are all in base64 encoded strings. In fact, you can create an identical Secret using the following YAML:
+The above YAML may look confusing because the values are all in **base64** encoded strings. In fact, you can create an identical Secret using the following YAML:
 ```
         apiVersion: v1
         kind: Secret
@@ -201,7 +203,7 @@ The above YAML may look confusing because the values are all in base64 encoded s
         # You can store the username in a file ./username.txt and the password in a file ./password.txt on your local machine.
 
         # In these commands, the -n flag ensures that the generated files do not have an extra newline character at the end of the text.
-        # This is important because when kubectl reads a file and encodes the content into a base64 string, the extra newline character gets encoded too.
+        # This is important because when kubectl reads a file and encodes the content into a **base64** string, the extra newline character gets encoded too.
         echo -n 'admin' > ./username.txt
         echo -n '1f2d1e2e67df' > ./password.txt
 
@@ -254,7 +256,7 @@ The above YAML may look confusing because the values are all in base64 encoded s
 You can create a Secret in a file first, in JSON or YAML format, and then create that object.
 The Secret resource contains two maps:
 ```
-            # The data field is used to store arbitrary data, encoded using base64.
+            # The data field is used to store arbitrary data, encoded using **base64**.
             data
             # The stringData field is provided for convenience, and it allows you to provide Secret data as unencoded strings.
             stringData.
@@ -262,7 +264,7 @@ The Secret resource contains two maps:
 Notes: The keys of data and stringData must consist of alphanumeric characters, -, _ or ..
         
 ```
-        # to store two strings in a Secret using the data field, convert the strings to base64 as follows:
+        # to store two strings in a Secret using the data field, convert the strings to **base64** as follows:
         echo -n 'admin' | base64
         # The output is similar to: YWRtaW4=
 
@@ -283,14 +285,14 @@ Notes: The keys of data and stringData must consist of alphanumeric characters, 
 ```
 Note:
 ```
-            The serialized JSON and YAML values of Secret data are encoded as base64 strings.
+            The serialized JSON and YAML values of Secret data are encoded as **base64** strings.
             Newlines are not valid within these strings and must be omitted.
-            When using the base64 utility on Darwin/macOS, users should avoid using the -b option to split long lines.
-            Conversely, Linux users should add the option -w 0(zero) to base64 commands or the pipeline base64 | tr -d '\n' if the -w option is not available.
+            When using the **base64** utility on Darwin/macOS, users should avoid using the -b option to split long lines.
+            Conversely, Linux users should add the option -w 0(zero) to **base64** commands or the pipeline **base64** | tr -d '\n' if the -w option is not available.
 ```
 
 For certain scenarios, you may wish to use the stringData field instead.
-This field allows you to put a non-base64 encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.
+This field allows you to put a **non-base64** encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.
 #### Configuration file demo:
 ```
         # if your application uses the following configuration file:
