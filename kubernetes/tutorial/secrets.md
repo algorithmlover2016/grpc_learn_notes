@@ -78,6 +78,7 @@ kubectl create secret docker-registry secret-tiger-docker \
   --docker-email=tiger@acme.com \
   --docker-server=my-registry.example:5000
 ```
+
 ### Basic authentication Secret:
 When using this Secret type, the data field of the Secret must contain the following two keys:<br>
 ```
@@ -99,6 +100,7 @@ stringData:
   username: admin
   password: t0p-Secret
 ```
+
 ### SSH authentication secrets:
 When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the ***`data`*** (or ***`stringData`***) field as the SSH credential to use.<br>
 ```
@@ -143,6 +145,7 @@ kubectl create secret tls my-tls-secret \
 # The private key must be in what is commonly called PEM private key format, unencrypted.
 # In both cases, the initial and the last lines from PEM (for example, --------BEGIN CERTIFICATE----- and -------END CERTIFICATE---- for a certificate) are not included.
 ```
+
 ### Bootstrap token Secrets:
 A bootstrap token Secret is usually created in the kube-system namespace and named in the form bootstrap-token-<token-id> where <token-id> is a 6 character string of the token ID.<br>
 ```
@@ -193,6 +196,7 @@ stringData:
 ```
 
 ## [Managing Secrets using kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
+
 ### Create a Secret:
 ```
 # a database connection string consists of a username and password.
@@ -225,6 +229,7 @@ kubectl create secret generic db-user-pass \
   --from-literal=username=devuser \
   --from-literal=password='S!B\*d$zDsb='
 ```
+
 ### Verify the Secret:
 ```
 # Check that the Secret was created
@@ -233,7 +238,8 @@ kubectl get secrets
 # view a description of the Secret:
 kubectl describe secrets/db-user-pass
 ```
-### Decoding the Secret:
+
+#### Decoding the Secret:
 ```
 # To view the contents of the Secret you created, run the following command:
 kubectl get secret db-user-pass -o jsonpath='{.data}'
@@ -241,12 +247,14 @@ kubectl get secret db-user-pass -o jsonpath='{.data}'
 # decode the password data, if The output is similar to: {"password":"MWYyZDFlMmU2N2Rm","username":"YWRtaW4="}
 echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
 ```
+
 ### Clean Up:
 ```
 kubectl delete secret db-user-pass
 ```
 
 ## [Managing Secrets using Configuration File](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-config-file/)
+
 ### Create the Config file:
 You can create a Secret in a file first, in ***JSON*** or ***YAML*** format, and then create that object.<br>
 The Secret resource contains two maps:<br>
@@ -284,6 +292,7 @@ data:
 
 For certain scenarios, you may wish to use the ***`stringData`*** field instead.<br>
 This field allows you to put a **non-base64** encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.<br>
+
 #### Configuration file demo:
 ```
 # if your application uses the following configuration file:
@@ -308,7 +317,7 @@ stringData:
 ***Note:***<br>
 * If a field, such as username, is specified in both ***`data`*** and ***`stringData`***, the value from ***`stringData`*** is used.
 
-### Create the Secret object:
+#### Create the Secret object:
 ```
 kubectl apply -f ./secret.yaml
 ```
@@ -326,7 +335,9 @@ kubectl delete secret mysecret
 ```
 
 ## [Managing Secrets using Kustomize](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kustomize/)
-### Create the Kustomization file:
+
+### Create the secrets by Kustomization file:
+#### Create the Kustomization file:
 You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by<br>
 * referencing other existing files.<br>
 * providing some literals.<br>
@@ -355,7 +366,7 @@ secretGenerator:
   - .env.secret
 ```
 
-### Create the Secret:
+#### Create the Secret:
 ```
 # Apply the directory containing the kustomization.yaml to create the Secret.
 kubectl apply -k .
