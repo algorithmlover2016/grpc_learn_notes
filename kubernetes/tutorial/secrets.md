@@ -1,18 +1,17 @@
-# Secret consept(reference to https://kubernetes.io/docs/concepts/configuration/secret/)
+# [Secret consept](https://kubernetes.io/docs/concepts/configuration/secret/)
 To use a Secret, a Pod needs to reference the Secret. A Secret can be used with a Pod in three ways:<br>
-    As files in a volume mounted on one or more of its containers.<br>
-    As container environment variable.<br>
-    By the kubelet when pulling images for the Pod.<br>
+    * As files in a volume mounted on one or more of its containers.<br>
+    * As container environment variable.<br>
+    * By the kubelet when pulling images for the Pod.<br>
 
-The name of a Secret object must be a valid DNS subdomain name. You can specify the "data" and/or the "stringData" field<br>
-    when creating a configuration file for a Secret.<br>
-The "data" and the "stringData" fields are optional.<br>
-The values for all keys in the "data" field have to be base64-encoded strings. If the conversion to base64 string is not desirable,<br>
-    you can choose to specify the stringData field instead, which accepts arbitrary strings as values.<br>
-
-The keys of "data" and "stringData" must consist of alphanumeric characters, -, _ or ..<br>
-All key-value pairs in the "stringData" field are internally merged into the "data" field.<br>
-If a key appears in both the "data" and the "stringData" field, the value specified in the "stringData" field takes precedence<br>
+**Caution**:
+* The name of a Secret object must be a valid [DNS subdomain name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names#dns-subdomain-names). You can specify the ***data*** and/or the ***stringData*** field when creating a configuration file for a Secret.<br>
+* The "data" and the "stringData" fields are optional.<br>
+* The values for all keys in the "data" field have to be base64-encoded strings.<br>
+* If the conversion to base64 string is not desirable, you can choose to specify the stringData field instead, which accepts arbitrary strings as values.<br>
+* The keys of ***data*** and ***stringData*** must consist of alphanumeric characters, -, _ or ..<br>
+* All key-value pairs in the ***stringData*** field are internally merged into the ***data*** field.<br>
+* If a key appears in both the ***data*** and the ***stringData*** field, the value specified in the ***stringData*** field takes precedence<br>
 
 ## Types of Secret:
 
@@ -28,49 +27,42 @@ If a key appears in both the "data" and the "stringData" field, the value specif
     bootstrap.kubernetes.io/token	    bootstrap token data
 ```
 
-You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.
-An empty string is treated as an Opaque type.
-Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.
+You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.<br>
+An empty string is treated as an Opaque type.<br>
+Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.<br>
 
 ### Opaque secrets:
-When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.
+When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.<br>
 
-```
-        # creates an empty Secret of type Opaque
-        kubectl create secret generic empty-secret
-```
+    # creates an empty Secret of type Opaque
+    kubectl create secret generic empty-secret
 
 ### Service account token Secrets:
-When using this Secret type, you need to ensure that the kubernetes.io/service-account.name annotation is set to an existing service account name.
-A Kubernetes controller fills in some other fields such as the kubernetes.io/service-account.uid annotation and the token key in the data field set to actual token content.
+When using this Secret type, you need to ensure that the ***kubernetes.io/service-account.name*** annotation is set to an existing service account name.<br>
+A Kubernetes controller fills in some other fields such as the ***kubernetes.io/service-account.uid*** annotation and the token key in the data field set to actual token content.<br>
+    # declares a service account token Secret:
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: secret-sa-sample
+      annotations:
+        kubernetes.io/service-account.name: "sa-name"
+    type: kubernetes.io/service-account-token
+    data:
+      # You can include additional key value pairs as you do with Opaque Secrets
+      extra: YmFyCg==
 
-```
-        # declares a service account token Secret:
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: secret-sa-sample
-          annotations:
-            kubernetes.io/service-account.name: "sa-name"
-        type: kubernetes.io/service-account-token
-        data:
-          # You can include additional key value pairs as you do with Opaque Secrets
-          extra: YmFyCg==
-```
 ### Docker config Secrets:
-You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.
-```
-        # The kubernetes.io/dockercfg type is reserved to store a serialized ~/.dockercfg which is the legacy format for configuring Docker command line.
-        # When using this Secret type, you have to ensure the Secret data field contains a .dockercfg key whose value is content of a ~/.dockercfg file encoded in the base64 format.
-        kubernetes.io/dockercfg
+You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.<br>
+   # The ***kubernetes.io/dockercfg*** type is reserved to store a serialized ***~/.dockercfg*** which is the legacy format for configuring Docker command line.
+   # When using this Secret type, you have to ensure the Secret data field contains a ***.dockercfg*** key whose value is content of a ***~/.dockercfg*** file encoded in the base64 format.
+   * kubernetes.io/dockercfg
 
-        # The kubernetes.io/dockerconfigjson type is designed for storing a serialized JSON that follows the same format rules as the ~/.docker/config.json file
-        # which is a new format for ~/.dockercfg.
-        # When using this Secret type, the data field of the Secret object must contain a .dockerconfigjson key,
-        # in which the content for the ~/.docker/config.json file is provided as a base64 encoded string.
-        kubernetes.io/dockerconfigjson
-
-```
+   # The kubernetes.io/dockerconfigjson type is designed for storing a serialized JSON that follows the same format rules as the ~/.docker/config.json file
+   # which is a new format for ~/.dockercfg.
+   # When using this Secret type, the data field of the Secret object must contain a .dockerconfigjson key,
+   # in which the content for the ~/.docker/config.json file is provided as a base64 encoded string.
+   * kubernetes.io/dockerconfigjson
 Note:
     If you do not want to perform the base64 encoding, you can choose to use the stringData field instead.
     When you create these types of Secrets using a manifest,
@@ -203,7 +195,7 @@ The above YAML may look confusing because the values are all in base64 encoded s
           usage-bootstrap-signing: "true"
 ```
 
-## Managing Secrets using kubectl (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
+## [Managing Secrets using kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
 ### Create a Secret:
 ```
         # a database connection string consists of a username and password.
@@ -258,7 +250,7 @@ The above YAML may look confusing because the values are all in base64 encoded s
     kubectl delete secret db-user-pass
 ```
 
-## Managing Secrets using Configuration File (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-config-file/)
+## [Managing Secrets using Configuration File](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-config-file/)
 ### Create the Config file:
 You can create a Secret in a file first, in JSON or YAML format, and then create that object.
 The Secret resource contains two maps:
@@ -339,7 +331,7 @@ This field allows you to put a non-base64 encoded string directly into the Secre
         kubectl delete secret mysecret
 ```
 
-## Managing Secrets using Kustomize (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kustomize/)
+## [Managing Secrets using Kustomize](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kustomize/)
 ### Create the Kustomization file:
 You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by
 ```
