@@ -58,7 +58,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
           extra: YmFyCg==
 ```
 ### Docker config Secrets:
-        You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.
+You can use one of the following type values to create a Secret to store the credentials for accessing a Docker registry for images.
 ```
         # The kubernetes.io/dockercfg type is reserved to store a serialized ~/.dockercfg which is the legacy format for configuring Docker command line.
         # When using this Secret type, you have to ensure the Secret data field contains a .dockercfg key whose value is content of a ~/.dockercfg file encoded in the base64 format.
@@ -87,7 +87,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
           --docker-server=my-registry.example:5000
 ```
 ### Basic authentication Secret:
-        When using this Secret type, the data field of the Secret must contain the following two keys:
+When using this Secret type, the data field of the Secret must contain the following two keys:
 ```
         username: the user name for authentication;
         password: the password or token for authentication.
@@ -109,7 +109,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
 
 ```
 ### SSH authentication secrets:
-        When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the data (or stringData) field as the SSH credential to use.
+When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the data (or stringData) field as the SSH credential to use.
 ```
         # an example config for a SSH authentication Secret:
         apiVersion: v1
@@ -126,8 +126,8 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
                 A secondary means of establishing trust is needed to mitigate "man in the middle" attacks, such as a known_hosts file added to a ConfigMap.
 
 ### TLS secrets:
-        When using this type of Secret, the tls.key and the tls.crt key must be provided in the data (or stringData) field of the Secret configuration,
-            although the API server doesn't actually validate the values for each key.
+When using this type of Secret, the tls.key and the tls.crt key must be provided in the data (or stringData) field of the Secret configuration,
+although the API server doesn't actually validate the values for each key.
 ```
         # an example config for a TLS Secret
         apiVersion: v1
@@ -142,7 +142,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
           tls.key: |
                 MIIEpgIBAAKCAQEA7yn3bRHQ5FHMQ ...
 ```
-        When creating a TLS Secret using kubectl, you can use the tls subcommand as shown in the following example:
+When creating a TLS Secret using kubectl, you can use the tls subcommand as shown in the following example:
 ```
         kubectl create secret tls my-tls-secret \
           --cert=path/to/cert/file \
@@ -153,7 +153,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
         # In both cases, the initial and the last lines from PEM (for example, --------BEGIN CERTIFICATE----- and -------END CERTIFICATE---- for a certificate) are not included.
 ```
 ### Bootstrap token Secrets:
-        A bootstrap token Secret is usually created in the kube-system namespace and named in the form bootstrap-token-<token-id> where <token-id> is a 6 character string of the token ID.
+A bootstrap token Secret is usually created in the kube-system namespace and named in the form bootstrap-token-<token-id> where <token-id> is a 6 character string of the token ID.
 ```
         # As a Kubernetes manifest, a bootstrap token Secret might look like the following:
         apiVersion: v1
@@ -171,7 +171,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
           usage-bootstrap-signing: dHJ1ZQ==
 ```
 
-        A bootstrap type Secret has the following keys specified under data:
+A bootstrap type Secret has the following keys specified under data:
 ```
         token-id: A random 6 character string as the token identifier. Required.
         token-secret: A random 16 character string as the actual token secret. Required.
@@ -181,7 +181,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
         auth-extra-groups: A comma-separated list of group names that will be authenticated as in addition to the system:bootstrappers group.
 ```
 
-        The above YAML may look confusing because the values are all in base64 encoded strings. In fact, you can create an identical Secret using the following YAML:
+The above YAML may look confusing because the values are all in base64 encoded strings. In fact, you can create an identical Secret using the following YAML:
 ```
         apiVersion: v1
         kind: Secret
@@ -204,7 +204,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
 ```
 
 ## Managing Secrets using kubectl (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
-    Create a Secret:
+### Create a Secret:
 ```
         # a database connection string consists of a username and password.
         # You can store the username in a file ./username.txt and the password in a file ./password.txt on your local machine.
@@ -237,7 +237,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
           --from-literal=username=devuser \
           --from-literal=password='S!B\*d$zDsb='
 ```
-    Verify the Secret:
+### Verify the Secret:
 ```
         # Check that the Secret was created
         kubectl get secrets
@@ -245,7 +245,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
         # view a description of the Secret:
         kubectl describe secrets/db-user-pass
 ```
-    Decoding the Secret:
+### Decoding the Secret:
 ```
         # To view the contents of the Secret you created, run the following command:
         kubectl get secret db-user-pass -o jsonpath='{.data}'
@@ -253,22 +253,22 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
         # decode the password data, if The output is similar to: {"password":"MWYyZDFlMmU2N2Rm","username":"YWRtaW4="}
         echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
 ```
-    Clean Up:
+### Clean Up:
 ```
     kubectl delete secret db-user-pass
 ```
 
 ## Managing Secrets using Configuration File (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-config-file/)
-    Create the Config file:
-        You can create a Secret in a file first, in JSON or YAML format, and then create that object.
-        The Secret resource contains two maps:
+### Create the Config file:
+You can create a Secret in a file first, in JSON or YAML format, and then create that object.
+The Secret resource contains two maps:
 ```
             # The data field is used to store arbitrary data, encoded using base64.
             data
             # The stringData field is provided for convenience, and it allows you to provide Secret data as unencoded strings.
             stringData.
 ```
-        Notes: The keys of data and stringData must consist of alphanumeric characters, -, _ or ..
+Notes: The keys of data and stringData must consist of alphanumeric characters, -, _ or ..
         
 ```
         # to store two strings in a Secret using the data field, convert the strings to base64 as follows:
@@ -290,8 +290,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
 
         # Note that the name of a Secret object must be a valid DNS subdomain name.
 ```
-
-        Note:
+Note:
 ```
             The serialized JSON and YAML values of Secret data are encoded as base64 strings.
             Newlines are not valid within these strings and must be omitted.
@@ -299,11 +298,9 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
             Conversely, Linux users should add the option -w 0(zero) to base64 commands or the pipeline base64 | tr -d '\n' if the -w option is not available.
 ```
 
-        For certain scenarios, you may wish to use the stringData field instead.
-        This field allows you to put a non-base64 encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.
-
-
-        Configuration file demo:
+For certain scenarios, you may wish to use the stringData field instead.
+This field allows you to put a non-base64 encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.
+#### Configuration file demo:
 ```
         # if your application uses the following configuration file:
         apiUrl: "https://my.api.com/api/v1"
@@ -326,32 +323,32 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
 
         # Note: If a field, such as username, is specified in both data and stringData, the value from stringData is used.
 ```
-    Create the Secret object:
+### Create the Secret object:
 ```
         kubectl apply -f ./secret.yaml
 ```
 
-    Check the Secret:
+### Check the Secret:
         Note: The stringData field is a write-only convenience field. It is never output when retrieving Secrets.
 ```
         kubectl get secret mysecret -o yaml
 ```
 
-    Clean Up:
+### Clean Up:
 ```
         kubectl delete secret mysecret
 ```
 
 ## Managing Secrets using Kustomize (reference to https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kustomize/)
-    Create the Kustomization file:
-        You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by
+### Create the Kustomization file:
+You can generate a Secret by defining a secretGenerator in a "kustomization.yaml" file by
 ```
             referencing other existing files.
             providing some literals
             providing .env files
 ```
 
-        Demo:
+#### Demo:
 ```
         # the following kustomization file references the ./username.txt and the ./password.txt files:
         secretGenerator:
@@ -374,13 +371,13 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
           - .env.secret
 ```
 
-    Create the Secret:
+### Create the Secret:
 ```
     # Apply the directory containing the kustomization.yaml to create the Secret.
     kubectl apply -k .
 ```
 
-    Check the Secret created:
+### Check the Secret created:
 ```
     # check that the secret was created
     kubectl get secrets
@@ -393,7 +390,7 @@ A Kubernetes controller fills in some other fields such as the kubernetes.io/ser
     kubectl describe secrets/db-user-pass-96mffmfh4k
 ```
 
-    Clean Up:
+### Clean Up:
 ```
     kubectl delete secret db-user-pass-96mffmfh4k
 ```
