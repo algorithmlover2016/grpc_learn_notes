@@ -26,11 +26,11 @@ kubernetes.io/tls	                data for a TLS client or server
 bootstrap.kubernetes.io/token	    bootstrap token data
 ```
 You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object.<br>
-An empty string is treated as an Opaque type.<br>
+An empty string is treated as an ***Opaque*** type.<br>
 Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the builtin types, you must meet all the requirements defined for that type.<br>
 
 ### Opaque secrets:
-When you create a Secret using kubectl, you will use the generic subcommand to indicate an Opaque Secret type.<br>
+When you create a Secret using kubectl, you will use the generic subcommand to indicate an ***Opaque*** Secret type.<br>
 ```
 # creates an empty Secret of type Opaque
 kubectl create secret generic empty-secret
@@ -101,7 +101,7 @@ stringData:
 
 ```
 ### SSH authentication secrets:
-When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the `***data***` (or `***stringData***`) field as the SSH credential to use.<br>
+When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the ***`data`*** (or ***`stringData`***) field as the SSH credential to use.<br>
 ```
 # an example config for a SSH authentication Secret:
 apiVersion: v1
