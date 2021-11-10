@@ -554,7 +554,7 @@ configure looks like as follows:
 * ***`src`***                         只将源码目录下的文件打包
 * ***`project`***                     将整个project资源打包
 <\b>
-* 使用 descriptorRefs来引用(官方提供的定制化打包方式)
+##### 使用 descriptorRefs来引用(官方提供的定制化打包方式)
 ```
 <plugin>
     <artifactId>maven-assembly-plugin</artifactId>
@@ -567,14 +567,14 @@ configure looks like as follows:
     </configuration>
 </plugin>
 ```
-* ***user-defined assembly desciptor***
-* **[content in assembly.xml](https://www.jianshu.com/p/14bcb17b99e0)
+#### ***user-defined assembly desciptor***
+##### **[content in assembly.xml]**(https://www.jianshu.com/p/14bcb17b99e0)
 * ***`id`***
 * ***`formats`***
 * ***`dependencySets`***
-    * outputDirectory   String          指定包依赖目录，该目录是相对于根目录
-    * includes/include* List<String>    包含依赖
-    * excludes/exclude* List<String>    排除依赖
+    * **`outputDirectory`**   **`String`**          指定包依赖目录，该目录是相对于根目录
+    * **`includes/include*`** **`List<String>`**    包含依赖
+    * **`excludes/exclude*`** **`List<String>`**    排除依赖
 ```
 <dependencySets>
     <dependencySet>
@@ -583,10 +583,10 @@ configure looks like as follows:
 </dependencySets>
 ```
 * ***`fileSets`***
-    * outputDirectory   String          指定文件集合的输出目录，该目录是相对于根目录
-    * includes/include*	List<String>    包含文件
-    * excludes/exclude*	List<String>    排除文件
-    * fileMode          String          指定文件属性，使用八进制表达，分别为(User)(Group)(Other)所属属性，默认为 0644
+    * **`outputDirectory`**     **`String`**          指定文件集合的输出目录，该目录是相对于根目录
+    * **`includes/include*`**	**`List<String>`**    包含文件
+    * **`excludes/exclude*`**	**`List<String>`**    排除文件
+    * **`fileMode`**            **`String`**          指定文件属性，使用八进制表达，分别为(User)(Group)(Other)所属属性，默认为 0644
 ```
 <fileSets>
     <fileSet>
@@ -606,10 +606,10 @@ configure looks like as follows:
 </fileSets>
 ```
 * ***`files`***
-    * **`source`**           String    源文件，相对路径或绝对路径
-    * **`outputDirectory`**  String    输出目录
-    * **`destName`**         String    目标文件名
-    * **`fileMode`**         String    设置文件 UNIX 属性
+    * **`source`**           **`String`**    源文件，相对路径或绝对路径
+    * **`outputDirectory`**  **`String`**    输出目录
+    * **`destName`**         **`String`**    目标文件名
+    * **`fileMode`**         **`String`**    设置文件 UNIX 属性
 ```
 <files>
     <file>
@@ -618,7 +618,7 @@ configure looks like as follows:
     </file>
 </files>
 ```
-***`bin`***
+##### ***`bin`*** template
 ```
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -653,8 +653,7 @@ configure looks like as follows:
     </fileSets>
 </assembly>
 ```
-***`jar-with-dependencies`***
-***[assembly configuration format](https://cloud.tencent.com/developer/article/1622206)*** assuming that it's located in **`src/main/assembly/assembly.xml`**
+##### ***[assembly configuration format](https://cloud.tencent.com/developer/article/1622206)*** assuming that it's located in **`src/main/assembly/assembly.xml`**
 ```
 <assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
