@@ -544,6 +544,9 @@ configure looks like as follows:
                             <!--配置描述文件路径-->
                             <descriptor>src/main/assembly/assembly.xml</descriptor>
                         </descriptors>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
                     </configuration>
                 </execution>
             </executions>
