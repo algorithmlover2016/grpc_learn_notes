@@ -568,7 +568,7 @@ configure looks like as follows:
 </plugin>
 ```
 #### ***user-defined assembly desciptor***
-##### **[content in assembly.xml]**(https://www.jianshu.com/p/14bcb17b99e0)
+##### **[content in assembly.xml](https://www.jianshu.com/p/14bcb17b99e0)**
 * ***`id`***
 * ***`formats`***
 * ***`dependencySets`***
