@@ -109,7 +109,7 @@
 # [Maven Properties Guide](https://cwiki.apache.org/confluence/display/MAVEN/Maven+Properties+Guide)
 * ***`${project.basedir}`***
     * This references to the root folder of the module/project (the location where the current `pom.xml` file is located)
-    * POM properties referencing useful build locations, with default values defined in the **[Super POM]**(http://maven.apache.org/pom.html#The_Super_POM):
+    * POM properties referencing useful build locations, with default values defined in the **[Super POM](http://maven.apache.org/pom.html#The_Super_POM)**:
 
 * ***`${project.build.directory}`***
     * This represents by default the **`target`** folder.
