@@ -1,5 +1,5 @@
 # command command:
-[常用命令](https://blog.csdn.net/superit401/article/details/51355241)
+## [常用命令](https://blog.csdn.net/superit401/article/details/51355241)
 ```
 # 创建 Maven 项目
 mvn archetype:create
@@ -40,7 +40,7 @@ mvn archetype:generate -DgroupId=com.demo -DartifactId=App
 mvn archetype:generate -DgroupId=com.demo -DartifactId=web-app -DarchetypeArtifactId=maven-archetype-webapp
 
 ```
-[MVN in 5 minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+## [MVN in 5 minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
 ```
 # create a project by command line:
 mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
