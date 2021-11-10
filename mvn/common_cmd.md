@@ -51,94 +51,94 @@ mvn package
 # test the newly compiled and packaged JAR with the following command:
 java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
 ```
+the created ***`pom.xml`*** file looks like the following:
 ```
-# the created pom.xml file looks like the following:
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.mycompany.app</groupId>
-  <artifactId>my-app</artifactId>
-  <version>1.0-SNAPSHOT</version>
+    <groupId>com.mycompany.app</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-  <name>my-app</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+    <name>my-app</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <!-- set the maven.compiler.release property to the Java release you are targetting -->
-    <maven.compiler.release>11</maven.compiler.release>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <!-- set the maven.compiler.release property to the Java release you are targetting -->
+        <maven.compiler.release>11</maven.compiler.release>
 
-  </properties>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <!-- To target Java 9 (responding to maven.compiler.release property) or later, you should at least use version 3.6.0 of the maven-compiler-plugin -->
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-          <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <mainClass>com.mycompany.app.App</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+    <build>
+       <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <!-- To target Java 9 (responding to maven.compiler.release property) or later, you should at least use version 3.6.0 of the maven-compiler-plugin -->
+                    <version>3.8.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                    <configuration>
+                    <archive>
+                      <manifest>
+                          <addClasspath>true</addClasspath>
+                          <mainClass>com.mycompany.app.App</mainClass>
+                      </manifest>
+                    </archive>
+                </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+            </plugins>
+       </pluginManagement>
+    </build>
 </project>
 ```
 
@@ -158,7 +158,7 @@ java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
 * **verify**: run any checks to verify the package is valid and meets quality criteria
 * **install**: install the package into the local repository, for use as a dependency in other projects locally
 * **deploy**: done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects.
-
+<\b>
 * **clean**: cleans up artifacts created by prior builds
     * eg `mvn clean dependency:copy-dependencies package`
 * **site**: generates site documentation for this project
@@ -184,7 +184,7 @@ java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
     <build>
         ...
         <plugins>
-            <!-- only build source codes in src/main not including dependencies into jar files-->
+            <!-- only build source codes in src/main not including dependencies into jar files, default plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -456,4 +456,262 @@ java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
         ...
     </build>
 </project>
+```
+# [常见的maven插件](https://segmentfault.com/a/1190000016237395)
+* ***`maven-jar-plugin`***        maven 默认打包插件，用来创建 project jar
+* ***`maven-shade-plugin`***      用来打可执行包，executable(fat) jar
+* ***`maven-assembly-plugin`***   支持定制化打包方式，例如 apache 项目的打包方式
+## maven-compiler-plugin
+configure looks like this when using **`maven-compiler-plugin`**
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.1</version>
+    <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+    </configuration>
+</plugin>
+```
+or
+```
+<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+```
+
+## maven-jar-plugin
+configure looks like as follows:
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>2.4</version>
+    <configuration>
+        <archive>
+            <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>/data/lib</classpathPrefix>
+                <mainClass>com.zhang.spring.App</mainClass>
+            </manifest>
+        </archive>
+    </configuration>
+</plugin>
+```
+## maven-assembly-plugin
+### pom.xml中配置maven的assembly插件
+```
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>your.packge_name.main_class_name</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+            <executions>
+                <execution>
+                    <!-- 配置执行器 -->
+                    <id>make-assembly</id>
+                    <phase>package</phase><!-- 绑定到package生命周期阶段上 -->
+                    <!--  (1) -->
+                    <goals>
+                        <goal>single</goal><!-- 只运行一次 -->
+                    </goals>
+
+                    <!-- (2) -->
+                    <configuration>
+                        <!-- Define the name of the output jar -->
+                        <finalName>${project.name}</finalName>
+
+                        <!-- Do not append descriptor id (assembly_id) to $finalName, default is true -->
+                        <appendAssemblyId>false</appendAssemblyId>
+
+                        <!-- Specify the output directory -->
+                        <outputDirectory>${project.basedir}/out</outputDirectory>
+
+                        <descriptors>
+                            <!--配置描述文件路径-->
+                            <descriptor>src/main/assembly/assembly.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                </execution>
+            </executions>
+          </plugin>
+        </plugins>
+</build>
+```
+#### 内置的Assembly Descriptor
+* ***`bin`***                         类似于默认打包，会将bin目录下的文件打到包中
+* ***`jar-with-dependencies`***       会将所有依赖都解压打包到生成物中
+* ***`src`***                         只将源码目录下的文件打包
+* ***`project`***                     将整个project资源打包
+<\b>
+* 使用 descriptorRefs来引用(官方提供的定制化打包方式)
+```
+<plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    ...
+    <configuration>
+        ...
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+</plugin>
+```
+* ***user-defined assembly desciptor***
+* **[content in assembly.xml](https://www.jianshu.com/p/14bcb17b99e0)
+* ***`id`***
+* ***`formats`***
+* ***`dependencySets`***
+    * outputDirectory   String          指定包依赖目录，该目录是相对于根目录
+    * includes/include* List<String>    包含依赖
+    * excludes/exclude* List<String>    排除依赖
+```
+<dependencySets>
+    <dependencySet>
+        <outputDirectory>/lib</outputDirectory>
+    </dependencySet>
+</dependencySets>
+```
+* ***`fileSets`***
+    * outputDirectory   String          指定文件集合的输出目录，该目录是相对于根目录
+    * includes/include*	List<String>    包含文件
+    * excludes/exclude*	List<String>    排除文件
+    * fileMode          String          指定文件属性，使用八进制表达，分别为(User)(Group)(Other)所属属性，默认为 0644
+```
+<fileSets>
+    <fileSet>
+        <includes>
+            <include>bin/**</include>
+        </includes>
+        <fileMode>0755</fileMode>
+    </fileSet>
+
+    <fileSet>
+        <includes>
+            <include>/conf/**</include>
+            <include>logs</include>
+        </includes>
+    </fileSet>
+
+</fileSets>
+```
+* ***`files`***
+    * **`source`**           String    源文件，相对路径或绝对路径
+    * **`outputDirectory`**  String    输出目录
+    * **`destName`**         String    目标文件名
+    * **`fileMode`**         String    设置文件 UNIX 属性
+```
+<files>
+    <file>
+        <source>README.txt</source>
+        <outputDirectory>/</outputDirectory>
+    </file>
+</files>
+```
+***`bin`***
+```
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+    <id>bin</id>
+    <formats>
+        <format>tar.gz</format>
+        <format>tar.bz2</format>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>README*</include>
+                <include>LICENSE*</include>
+                <include>NOTICE*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/site</directory>
+            <outputDirectory>docs</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
+```
+***`jar-with-dependencies`***
+***[assembly configuration format](https://cloud.tencent.com/developer/article/1622206)*** assuming that it's located in **`src/main/assembly/assembly.xml`**
+```
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd
+http://maven.apache.org/ASSEMBLY/2.0.0 ">
+
+    <!--唯一ID-->
+    <id>assembly_test</id>
+
+    <!--打包格式，允许同时有多个-->
+    <formats>
+        <format>tar.gz</format>
+        <format>dir</format>
+        <format>zip</format>
+    </formats>
+
+    <!--依赖jar包以及项目打包文件存储文件-->
+    <dependencySets>
+        <dependencySet>
+            <!--存储在projectName-assembly-version/lib下-->
+            <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <!--目录路径，如果不在这里指定，而在include中指定，那么其文件夹的也会被带进去-->
+            <directory>src/main/bin/</directory>
+            <includes>
+                <!--要哪些文件-->
+                <include>*.*</include>
+            </includes>
+            <excludes>
+                <!--不要哪些文件-->
+                <exclude>*.no_need</exclude>
+            </excludes>
+            <!--文件的权限-->
+            <fileMode>0755</fileMode>
+            <!--输出目录 存储在projectName-assembly-version/bin下-->
+            <outputDirectory>bin</outputDirectory>
+            <directoryMode>0755</directoryMode>
+
+        </fileSet>
+    </fileSets>
+
+    <files>
+        <!--针对单个文件-->
+        <file>
+            <!--源文件地址，相对于项目地址-->
+            <source>pom.xml</source>
+            <!--输出目录为projectName-assembly-version/-->
+            <outputDirectory>.</outputDirectory>
+            <!--文件的权限-->
+            <fileMode>0755</fileMode>
+            <!--重命名为-->
+            <destName>pom.xml</destName>
+        </file>
+    </files>
+</assembly>
 ```
