@@ -1,5 +1,5 @@
-[the detail explanation of pom.xml](http://www.shixinke.com/java/maven-configuration-file-pom-xml-introduction)
-# 一、配置文件概览
+[the detail explanation of pom.xml](https://maven.apache.org/pom.html)
+# [配置文件概览](http://www.shixinke.com/java/maven-configuration-file-pom-xml-introduction)
 ```
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
