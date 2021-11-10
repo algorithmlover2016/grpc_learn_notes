@@ -504,7 +504,7 @@ configure looks like as follows:
     </configuration>
 </plugin>
 ```
-## maven-assembly-plugin
+## [maven-assembly-plugin](http://maven.apache.org/plugins/maven-assembly-plugin/examples/index.html)
 ### [pom.xml中配置maven的assembly插件](http://maven.apache.org/plugins/maven-assembly-plugin/usage.html)
 ```
 <build>
