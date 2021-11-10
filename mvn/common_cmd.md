@@ -89,6 +89,9 @@ the created ***`pom.xml`*** file looks like the following:
        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+                <!-- NOTE: We don't need a groupId specification because the group is
+                            org.apache.maven.plugins ...which is assumed by default.
+                -->
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
