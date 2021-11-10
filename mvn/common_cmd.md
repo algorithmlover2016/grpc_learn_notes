@@ -567,7 +567,7 @@ configure looks like as follows:
     </configuration>
 </plugin>
 ```
-#### ***user-defined assembly desciptor***
+#### ***[user-defined assembly desciptor](http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html)***
 ##### **[content in assembly.xml](https://www.jianshu.com/p/14bcb17b99e0)**
 * ***`id`***
 * ***`formats`***
