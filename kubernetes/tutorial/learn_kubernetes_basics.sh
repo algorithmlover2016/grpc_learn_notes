@@ -61,10 +61,52 @@ kubectl describe
 kubectl logs
     # Note: We don’t need to specify the container name, because we only have one container inside the pod.
     kubectl logs $POD_NAME
-kubectl exec
+
+    # details
+    Options: (kubectl logs --help)
+        --all-containers=false: Get all containers' logs in the pod(s).
+        -c, --container='': Print the logs of this container
+        -f, --follow=false: Specify if the logs should be streamed.
+            --ignore-errors=false: If watching / following pod logs, allow for any errors that occur to be non-fatal
+            --insecure-skip-tls-verify-backend=false: Skip verifying the identity of the kubelet that logs are requested from.
+        In theory, an attacker could provide invalid log content back. You might want to use this if your kubelet serving
+        certificates have expired.
+              --limit-bytes=0: Maximum bytes of logs to return. Defaults to no limit.
+              --max-log-requests=5: Specify maximum number of concurrent logs to follow when using by a selector. Defaults to 5.
+              --pod-running-timeout=20s: The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one
+        pod is running
+              --prefix=false: Prefix each log line with the log source (pod name and container name)
+          -p, --previous=false: If true, print the logs for the previous instance of the container in a pod if it exists.
+          -l, --selector='': Selector (label query) to filter on.
+              --since=0s: Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of
+        since-time / since may be used.
+              --since-time='': Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time /
+        since may be used.
+              --tail=-1: Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise
+        10, if a selector is provided.
+              --timestamps=false: Include timestamps on each line in the log output
+        
+        Usage:
+          kubectl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] [options]
+
+
+kubectl exec (https://www.shellhacks.com/kubectl-exec-shell-login-to-pod-container/#:~:text=A%20kubectl%20exec%20command%20serves%20for%20executing%20commands,interactive%20shell%20session%20using%20the%20kubectl%20exec%20command.)
     # list the environment variables
     # Again, worth mentioning that the name of the container itself can be omitted since we only have a single container in the Pod.
     kubectl exec $POD_NAME -- env
 
-    #  start a bash session in the Pod’s container
-    kubectl exec -ti $POD_NAME -- bash
+    # start a bash session in the Pod’s container
+    # Get interactive shell to a Pod (if the Pod has multiple containers, you will login to a default one, i.e. the first container specified in the Pod’s config.)
+    kubectl exec -it $POD_NAME -- /bin/bash
+    kubectl exec --stdin --tty $POD_NAME -- /bin/bash
+
+    # To list all the containers in a Kubernetes Pod
+    kubectl get pod $POD_NAME -o jsonpath='{.spec.containers[*].name}{"\n"}'
+
+    # Login to a particular container in the Pod
+    kubectl exec -it $POD_NAME -c $container_name /bin/bash
+
+    # Login to a Pod in another Namespace
+    kubectl exec -it $POD_NAME -n $namespace /bin/bash
+
+
