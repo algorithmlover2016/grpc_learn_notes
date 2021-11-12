@@ -140,4 +140,8 @@ spec:
 * If you have an application that writes to a single file, it's recommended to set ***`/dev/stdout`*** as the destination rather than implement the streaming sidecar container approach<br>
 * It's recommended to use **`stdout`** and **`stderr`** directly and leave rotation and retention policies to the kubelet.<br>
 
+## ***[top](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/)***<br>
+***`kubectl top pod`***<br>
+***`kubectl top node`***<br>
+
 ## **[kubelet config](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/)**

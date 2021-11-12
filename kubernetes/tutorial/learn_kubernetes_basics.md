@@ -1,10 +1,10 @@
-#reference to https://kubernetes.io/docs/tutorials/kubernetes-basics/
-# Using Minikube to Create a Cluster (https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/)
+# [Learn Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
-# A Kubernetes cluster consists of two types of resources:
-#     The Control Plane coordinates the cluster
-#     Nodes are the workers that run applications
-
+## [Using Minikube to Create a Cluster](https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/)
+* **A Kubernetes cluster consists of two types of resources:**
+    * **The Control Plane coordinates the cluster**
+    * **Nodes are the workers that run applications**
+```
 #check minikube properly installed
 minikube version
 # start the cluster
@@ -45,24 +45,25 @@ export POD_NAME=$(kubectl get pods -o go-template --template '{{range .items}}{{
 echo Name of the Pod: $POD_NAME
 # access the Pod through the API
 curl http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/
+```
 
-# Kubernetes Pods https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/
-# Kubernetes Nodes: A Node is a worker machine in Kubernetes and may be either a virtual or a physical machine, depending on the cluster
-# Every Kubernetes Node runs at least:
-#   Kubelet, a process responsible for communication between the Kubernetes control plane and the Node; it manages the Pods and the containers running on a machine.
-#   A container runtime (like Docker) responsible for pulling the container image from a registry, unpacking the container, and running the application.
-
-# command:
-kubectl get
-    kubectl get pods
-kubectl describe
-    kubectl describe pods
-
-kubectl logs
+## [Kubernetes Pods](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
+* ***Kubernetes Nodes: A Node is a worker machine in Kubernetes and may be either a virtual or a physical machine, depending on the cluster***<br>
+* ***Every Kubernetes Node runs at least:***<br>
+    * **Kubelet, a process responsible for communication between the Kubernetes control plane and the Node; it manages the Pods and the containers running on a machine.**<br>
+    * **A container runtime (like Docker) responsible for pulling the container image from a registry, unpacking the container, and running the application.**<br>
+### **[command](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)**
+* **kubectl get:**<br>
+***`kubectl get pods`***
+* **kubectl describe**<br>
+***`kubectl describe pods`***
+* **kubectl logs:**<br>
+    ```
     # Note: We don’t need to specify the container name, because we only have one container inside the pod.
     kubectl logs $POD_NAME
-
-    # details
+    ```
+    * **details**
+    ```
     Options: (kubectl logs --help)
         --all-containers=false: Get all containers' logs in the pod(s).
         -c, --container='': Print the logs of this container
@@ -88,25 +89,27 @@ kubectl logs
         
         Usage:
           kubectl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] [options]
+    ```
+* **[kubectl exec](https://www.shellhacks.com/kubectl-exec-shell-login-to-pod-container/#:~:text=A%20kubectl%20exec%20command%20serves%20for%20executing%20commands,interactive%20shell%20session%20using%20the%20kubectl%20exec%20command.)**<br>
+```
+# list the environment variables
+# Again, worth mentioning that the name of the container itself can be omitted since we only have a single container in the Pod.
+kubectl exec $POD_NAME -- env
 
+# start a bash session in the Pod’s container
+# Get interactive shell to a Pod (if the Pod has multiple containers, you will login to a default one, i.e. the first container specified in the Pod’s config.)
+kubectl exec -it $POD_NAME -- /bin/bash
+kubectl exec --stdin --tty $POD_NAME -- /bin/bash
 
-kubectl exec (https://www.shellhacks.com/kubectl-exec-shell-login-to-pod-container/#:~:text=A%20kubectl%20exec%20command%20serves%20for%20executing%20commands,interactive%20shell%20session%20using%20the%20kubectl%20exec%20command.)
-    # list the environment variables
-    # Again, worth mentioning that the name of the container itself can be omitted since we only have a single container in the Pod.
-    kubectl exec $POD_NAME -- env
+# To list all the containers in a Kubernetes Pod
+kubectl get pod $POD_NAME -o jsonpath='{.spec.containers[*].name}{"\n"}'
 
-    # start a bash session in the Pod’s container
-    # Get interactive shell to a Pod (if the Pod has multiple containers, you will login to a default one, i.e. the first container specified in the Pod’s config.)
-    kubectl exec -it $POD_NAME -- /bin/bash
-    kubectl exec --stdin --tty $POD_NAME -- /bin/bash
+# Login to a particular container in the Pod
+kubectl exec -it $POD_NAME -c $container_name -- /bin/bash
 
-    # To list all the containers in a Kubernetes Pod
-    kubectl get pod $POD_NAME -o jsonpath='{.spec.containers[*].name}{"\n"}'
+# Login to a Pod in another Namespace
+kubectl exec -it $POD_NAME -n $namespace -- /bin/bash
 
-    # Login to a particular container in the Pod
-    kubectl exec -it $POD_NAME -c $container_name /bin/bash
-
-    # Login to a Pod in another Namespace
-    kubectl exec -it $POD_NAME -n $namespace /bin/bash
-
-
+# Opening a shell when a Pod has more than one container
+kubectl exec -i -t my-pod --container main-app -- /bin/bash
+```
