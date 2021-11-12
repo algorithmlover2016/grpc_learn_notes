@@ -20,7 +20,7 @@
 * **look at the status of a node**<br>
 ***`kubectl get nodes`***<br>
 ***`kubectl get node kubernetes-node-861h -o yaml`***<br>
-    * **describe node**
+    * **describe node**<br>
 ***`kubectl describe node kubernetes-node-861h`***<br>
 
 ## ***[Logs](https://kubernetes.io/docs/concepts/cluster-administration/logging/)***
@@ -66,7 +66,7 @@ spec:
     emptyDir: {}
 ```
 * **Here are two configuration files that you can use to implement a sidecar container with a logging agent.**
-    * ** a ConfigMap to configure fluentd**
+    * **a ConfigMap to configure fluentd**
 ```
 apiVersion: v1
 kind: ConfigMap
