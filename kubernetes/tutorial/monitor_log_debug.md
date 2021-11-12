@@ -2,24 +2,24 @@
 ## ***Using kubectl describe pod to fetch details about pods***
 
 * **get pods**<br>
-***`kubectl get pods`***
-***`kubectl get pods -o yaml`***
-***`kubectl get pod nginx-deployment-1006230814-6winp -o yaml`***
+***`kubectl get pods`***<br>
+***`kubectl get pods -o yaml`***<br>
+***`kubectl get pod nginx-deployment-1006230814-6winp -o yaml`***<br>
 
 * **retrieve a lot more information about each of these pods**
-***`kubectl describe pod nginx-deployment-1006230814-6winp`***
+***`kubectl describe pod nginx-deployment-1006230814-6winp`***<br>
 
 * **list events**
-    * **all events
+    * **all events**<br>
 ***`kubectl get events`***
-    * ** specify namespace**
+    * ** specify namespace**<br>
 ***`kubectl get events --namespace=my-namespace`***
-    * **see events from all namespaces
+    * **see events from all namespaces**
 ***`kubectl get events --all-namespaces`***
 
 * **look at the status of a node**
-***`kubectl get nodes`***
-***`kubectl get node kubernetes-node-861h -o yaml`***
+***`kubectl get nodes`***<br>
+***`kubectl get node kubernetes-node-861h -o yaml`***<br>
     * **describe node**
 ***`kubectl describe node kubernetes-node-861h`***
 
@@ -137,7 +137,7 @@ spec:
       name: fluentd-config
 ```
 ***Notes:***
-* If you have an application that writes to a single file, it's recommended to set ***`/dev/stdout`*** as the destination rather than implement the streaming sidecar container approach
-* It's recommended to use **`stdout`** and **`stderr`** directly and leave rotation and retention policies to the kubelet.
+* If you have an application that writes to a single file, it's recommended to set ***`/dev/stdout`*** as the destination rather than implement the streaming sidecar container approach<br>
+* It's recommended to use **`stdout`** and **`stderr`** directly and leave rotation and retention policies to the kubelet.<br>
 
 ## **[kubelet config](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/)
