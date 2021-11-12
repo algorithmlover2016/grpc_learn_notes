@@ -65,8 +65,8 @@ spec:
   - name: varlog
     emptyDir: {}
 ```
-* **Here are two configuration files that you can use to implement a sidecar container with a logging agent.**
-    * **a ConfigMap to configure fluentd**
+- **Here are two configuration files that you can use to implement a sidecar container with a logging agent.**
+    - **a ConfigMap to configure fluentd**
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -94,7 +94,7 @@ data:
       type google_cloud
     </match>
 ```
-    * **describes a pod that has a sidecar container running fluentd. The pod mounts a volume where fluentd can pick up its configuration data.**<br>
+    - **describes a pod that has a sidecar container running fluentd. The pod mounts a volume where fluentd can pick up its configuration data.**
 ```
 apiVersion: v1
 kind: Pod
