@@ -94,8 +94,7 @@ data:
       type google_cloud
     </match>
 ```
-<br>
-    * **describes a pod that has a sidecar container running fluentd. The pod mounts a volume where fluentd can pick up its configuration data.**
+    * **describes a pod that has a sidecar container running fluentd. The pod mounts a volume where fluentd can pick up its configuration data.**<br>
 ```
 apiVersion: v1
 kind: Pod
