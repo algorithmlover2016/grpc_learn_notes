@@ -1,7 +1,7 @@
 # [Application Introspection and Debugging](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/)
 ## ***Using kubectl describe pod to fetch details about pods***
 
-* **get pods**
+* **get pods**<br>
 ***`kubectl get pods`***
 ***`kubectl get pods -o yaml`***
 ***`kubectl get pod nginx-deployment-1006230814-6winp -o yaml`***
