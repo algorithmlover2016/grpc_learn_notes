@@ -6,22 +6,22 @@
 ***`kubectl get pods -o yaml`***<br>
 ***`kubectl get pod nginx-deployment-1006230814-6winp -o yaml`***<br>
 
-* **retrieve a lot more information about each of these pods**
+* **retrieve a lot more information about each of these pods**<br>
 ***`kubectl describe pod nginx-deployment-1006230814-6winp`***<br>
 
 * **list events**
     * **all events**<br>
 ***`kubectl get events`***
-    * ** specify namespace**<br>
+    * **specify namespace**<br>
 ***`kubectl get events --namespace=my-namespace`***
     * **see events from all namespaces**
 ***`kubectl get events --all-namespaces`***
 
-* **look at the status of a node**
+* **look at the status of a node**<br>
 ***`kubectl get nodes`***<br>
 ***`kubectl get node kubernetes-node-861h -o yaml`***<br>
     * **describe node**
-***`kubectl describe node kubernetes-node-861h`***
+***`kubectl describe node kubernetes-node-861h`***<br>
 
 ## ***[Logs](https://kubernetes.io/docs/concepts/cluster-administration/logging/)***
 * **a configuration file for a pod that has two sidecar containers**
