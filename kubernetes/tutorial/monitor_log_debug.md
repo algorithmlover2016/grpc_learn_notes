@@ -67,75 +67,75 @@ spec:
 ```
 - **Here are two configuration files that you can use to implement a sidecar container with a logging agent.**
     - **a ConfigMap to configure fluentd**
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: fluentd-config
-data:
-  fluentd.conf: |
-    <source>
-      type tail
-      format none
-      path /var/log/1.log
-      pos_file /var/log/1.log.pos
-      tag count.format1
-    </source>
-
-    <source>
-      type tail
-      format none
-      path /var/log/2.log
-      pos_file /var/log/2.log.pos
-      tag count.format2
-    </source>
-
-    <match **>
-      type google_cloud
-    </match>
-```
-    - **describes a pod that has a sidecar container running fluentd. The pod mounts a volume where fluentd can pick up its configuration data.**
-```
-apiVersion: v1
-kind: Pod
-metadata:
-  name: counter
-spec:
-  containers:
-  - name: count
-    image: busybox
-    args:
-    - /bin/sh
-    - -c
-    - >
-      i=0;
-      while true;
-      do
-        echo "$i: $(date)" >> /var/log/1.log;
-        echo "$(date) INFO $i" >> /var/log/2.log;
-        i=$((i+1));
-        sleep 1;
-      done
-    volumeMounts:
-    - name: varlog
-      mountPath: /var/log
-  - name: count-agent
-    image: k8s.gcr.io/fluentd-gcp:1.30
-    env:
-    - name: FLUENTD_ARGS
-      value: -c /etc/fluentd-config/fluentd.conf
-    volumeMounts:
-    - name: varlog
-      mountPath: /var/log
-    - name: config-volume
-      mountPath: /etc/fluentd-config
-  volumes:
-  - name: varlog
-    emptyDir: {}
-  - name: config-volume
-    configMap:
+    ```
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
       name: fluentd-config
-```
+    data:
+      fluentd.conf: |
+        <source>
+          type tail
+          format none
+          path /var/log/1.log
+          pos_file /var/log/1.log.pos
+          tag count.format1
+        </source>
+    
+        <source>
+          type tail
+          format none
+          path /var/log/2.log
+          pos_file /var/log/2.log.pos
+          tag count.format2
+        </source>
+    
+        <match **>
+          type google_cloud
+        </match>
+    ```
+    - **describes a pod that has a sidecar container running fluentd. The pod mounts a volume where fluentd can pick up its configuration data.**
+    ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: counter
+    spec:
+      containers:
+      - name: count
+        image: busybox
+        args:
+        - /bin/sh
+        - -c
+        - >
+          i=0;
+          while true;
+          do
+            echo "$i: $(date)" >> /var/log/1.log;
+            echo "$(date) INFO $i" >> /var/log/2.log;
+            i=$((i+1));
+            sleep 1;
+          done
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+      - name: count-agent
+        image: k8s.gcr.io/fluentd-gcp:1.30
+        env:
+        - name: FLUENTD_ARGS
+          value: -c /etc/fluentd-config/fluentd.conf
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: config-volume
+          mountPath: /etc/fluentd-config
+      volumes:
+      - name: varlog
+        emptyDir: {}
+      - name: config-volume
+        configMap:
+          name: fluentd-config
+    ```
 ***Notes:***
 * If you have an application that writes to a single file, it's recommended to set ***`/dev/stdout`*** as the destination rather than implement the streaming sidecar container approach<br>
 * It's recommended to use **`stdout`** and **`stderr`** directly and leave rotation and retention policies to the kubelet.<br>
