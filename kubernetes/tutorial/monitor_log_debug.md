@@ -144,4 +144,44 @@ spec:
 ***`kubectl top pod`***<br>
 ***`kubectl top node`***<br>
 
+## ***[service]()***
+***`kubectl get service`***<br>
+***`kubectl get services`***<br>
+***`kubectl get service specified_service_name`***<br>
+***`kubectl get services specified_service_name`***<br>
+```
+# MongoDB deployment and service
+# Create a Deployment that runs MongoDB
+kubectl apply -f https://k8s.io/examples/application/mongodb/mongo-deployment.yaml
+
+# Create a Service to expose MongoDB on the network
+kubectl apply -f https://k8s.io/examples/application/mongodb/mongo-service.yaml
+
+# Check the Service created
+kubectl get service mongo
+
+# Verify that the MongoDB server is running in the Pod, and listening on port 27017
+# Change mongo-75f59d57f4-4nd6q to the name of the Pod
+kubectl get pod mongo-75f59d57f4-4nd6q --template='{{(index (index .spec.containers 0).ports 0).containerPort}}{{"\n"}}'
+```
+
+## **[port-forward](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward)**
+* **[MongoDB port forward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/#forward-a-local-port-to-a-port-on-the-pod)**
+```
+# Change mongo-75f59d57f4-4nd6q to the name of the Pod
+kubectl port-forward mongo-75f59d57f4-4nd6q 28015:27017
+
+kubectl port-forward pods/mongo-75f59d57f4-4nd6q 28015:27017
+
+kubectl port-forward deployment/mongo 28015:27017
+
+kubectl port-forward replicaset/mongo-75f59d57f4 28015:27017
+
+kubectl port-forward service/mongo 28015:27017
+```
+
+
+
+
+
 ## **[kubelet config](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/)**
