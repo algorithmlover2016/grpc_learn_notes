@@ -20,5 +20,5 @@
     * **[`git rebase --onto topicA~5 topicA~3 topicA`](https://git-scm.com/docs/git-rebase)**<br>
 
 * ***merge branchA into branchB***<br>
-    * **`git checkout branchB`** and then **[`git rebase branchA`](https://www.waynerv.com/posts/git-rebase-intro/)**<br>
+    * **`git rebase branchA branchB`** equals to **`git checkout branchB`** and then **[`git rebase branchA`](https://www.waynerv.com/posts/git-rebase-intro/)**<br>
     * **`git rebase --onto master topicA topicB`**
