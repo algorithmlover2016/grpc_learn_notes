@@ -1,7 +1,8 @@
-# reference to https://stackoverflow.com/questions/533048/how-to-log-source-file-name-and-line-number-in-python
+# reference to https://newbedev.com/how-to-log-source-file-name-and-line-number-in-python
 import logging
 import sys
 
+# reference to https://stackoverflow.com/questions/533048/how-to-log-source-file-name-and-line-number-in-python
 # %(pathname)s Full pathname of the source file where the logging call was issued(if available).
 # %(filename)s Filename portion of pathname.
 # %(module)s Module (name portion of filename).
