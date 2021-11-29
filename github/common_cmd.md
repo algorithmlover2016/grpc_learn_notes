@@ -13,3 +13,6 @@
 * ***branch2 diff with branch1***<br>
     * **`git log branch1...branch2`**
     * **`git log --left-right branch1...branch2`**
+
+# [git rebase](https://git-scm.com/docs/git-rebase)
+* **[`git rebase -i [start_commit_id] [end_commit_id]`](https://www.jianshu.com/p/4a8f4af4e803)**
