@@ -15,4 +15,10 @@
     * **`git log --left-right branch1...branch2`**
 
 # [git rebase](https://git-scm.com/docs/git-rebase)
-* **[`git rebase -i [start_commit_id] [end_commit_id]`](https://www.jianshu.com/p/4a8f4af4e803)**
+* ***merge some commit into one commit in a branch***<br>
+    * **[`git rebase -i [start_commit_id] [end_commit_id]`](https://www.jianshu.com/p/4a8f4af4e803)**<br>
+    * **[`git rebase --onto topicA~5 topicA~3 topicA`](https://git-scm.com/docs/git-rebase)**<br>
+
+* ***merge branchA into branchB***<br>
+    * **`git checkout branchB`** and then **[`git rebase branchA`](https://www.waynerv.com/posts/git-rebase-intro/)**<br>
+    * **`git rebase --onto master topicA topicB`**
