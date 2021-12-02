@@ -84,11 +84,11 @@
 
 ## Submodule Tips
 ### **Submodule Foreach**<br>
-    * **`git submodule foreach 'git stash'`**<br>
-    * **`git submodule foreach 'git checkout -b featureA'`**<br>
-    * **`git diff; git submodule foreach 'git diff'`**<br>
+* **`git submodule foreach 'git stash'`**<br>
+* **`git submodule foreach 'git checkout -b featureA'`**<br>
+* **`git diff; git submodule foreach 'git diff'`**<br>
 ### **Useful Aliases**<br>
-    * **`git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"`**<br>
-    * **`git config alias.spush 'push --recurse-submodules=on-demand'`**<br>
-    * **`git config alias.supdate 'submodule update --remote --merge'`**<br>
+* **`git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"`**<br>
+* **`git config alias.spush 'push --recurse-submodules=on-demand'`**<br>
+* **`git config alias.supdate 'submodule update --remote --merge'`**<br>
 
