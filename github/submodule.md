@@ -12,7 +12,7 @@
     * **like your .gitignore file. It’s pushed and pulled with the rest of your project. This is how other people who clone this project know where to get the submodule projects from.**<br>
     * **Since the URL in the .gitmodules file is what other people will first try to clone/fetch from, make sure to use a URL that they can access if possible.**<br>
         * **You can overwrite this value locally with git config submodule.DbConnector.url PRIVATE_URL for your own use. When applicable, a relative URL can be helpful.**<br>
-* ***``git diff --cached submodule_Folder***<br>
+* ***`git diff --cached submodule_Folder`***<br>
     * ***`git diff --cached --submodule`***<br>
 
 ## clone a project with submodules
@@ -38,14 +38,57 @@
 
 #### automatically fetch and merge submodule
 * **`cd working_project_folder`**
-* **`git submodule update --remote subModuleFolderName`**<br>
+* **`git submodule update --remote` to update all of your submodules**<br>
+    * **pass the name of just the submodule you want to try to update**<br>
+        * **`git submodule update --remote subModuleFolderName`**<br>
     * **set specified branch you desired**<br>
         * **set in the `.gitmodules` file**<br>
             * **`git config -f .gitmodules submodule.subModuleFolderName.branch branch_name_you_specify`**<br>
             * **`git submodule update --remote`**<br>
-        ***Note***<br>
+        ***Caution:***<br>
         ***`If you leave off the -f .gitmodules it will only make the change for you`***<br>
-        
+* **`git status`**<br>
+    * **To show a short summary of changes to your submoudles**<br>
+        * **`git config status.submodulesummary 1`**
 
+* **actually see the log of commits that we’re about to commit to in our submodule**<br>
+    * **`git log -p --submodule`**<br>
+### Pulling Upstream Changes from the Project Remote
+* ***By default, the git pull command recursively fetches submodules changes. However, it does not update the submodules***<br>
+* **`git pull`**<br>
+    * **`git submodule update --init --recursive`**<br>
+    * **`git config --global submodule.recurse true`**<br>
+* **`git pull --recurse-submodules`**<br>
 
+### Working on a Submodule
+* **go into our submodule directory and check out a branch**<br>
+    * **`cd subModuleFolderName`**<br>
+    * **`git checkout branch_name`**<br>
+    * **`cd ../`**<br>
+    * **`git submodule update --remote --merge`**<br>
+    * **`cd subModuleFolderName` and make your changes and then `git commit -am "commments"`**<br>
+    * **`cd ../`**<br>
+    * **`git submodule update --remote --rebase`**<br>
+
+### Publishing Submodule Changes
+* **`git push --recurse-submodules=check` to make push simply fail if any of the committed submodule changes haven’t been pushed**<br>
+    * **`git config push.recurseSubmodules check` to want the check behavior to happen for all pushes**<br>
+* **`git push --recurse-submodules=on-demand`**<br>
+    * **`git config push.recurseSubmodules on-demand`**<br>
+### Merging Submodule Changes
+* **`git diff`**<br>
+* **`cd subModuleFoloderName`**<br>
+* **`git rev-parse HEAD`**<br>
+* **`git branch try-merge commit_id`**<br>
+* **`git merge try-merge`**<br>
+
+## Submodule Tips
+### **Submodule Foreach**<br>
+    * **`git submodule foreach 'git stash'`**<br>
+    * **`git submodule foreach 'git checkout -b featureA'`**<br>
+    * **`git diff; git submodule foreach 'git diff'`**<br>
+### **Useful Aliases**<br>
+    * **`git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"`**<br>
+    * **`git config alias.spush 'push --recurse-submodules=on-demand'`**<br>
+    * **`git config alias.supdate 'submodule update --remote --merge'`**<br>
 
