@@ -87,8 +87,16 @@
 * **`git submodule foreach 'git stash'`**<br>
 * **`git submodule foreach 'git checkout -b featureA'`**<br>
 * **`git diff; git submodule foreach 'git diff'`**<br>
-### **Useful Aliases**<br>
+### **[Useful Aliases](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases#_git_aliases)**
 * **`git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"`**<br>
 * **`git config alias.spush 'push --recurse-submodules=on-demand'`**<br>
 * **`git config alias.supdate 'submodule update --remote --merge'`**<br>
-
+* **`git config --global alias.co checkout`**<br>
+* **`git config --global alias.br branch`**<br>
+* **`git config --global alias.ci commit`**<br>
+* **`git config --global alias.st status`**<br>
+* **`git config --global alias.unstage 'reset HEAD --'`**<br>
+* **`git config --global alias.last 'log -1 HEAD'`**<br>
+* **maybe you want to run an external command, rather than a Git subcommand. In that case, you start the command with a ! character.**<br>
+    * **aliasing git visual to run gitk**<br>
+        * **`git config --global alias.visual '!gitk'`**<br>
