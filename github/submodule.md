@@ -100,3 +100,16 @@
 * **maybe you want to run an external command, rather than a Git subcommand. In that case, you start the command with a ! character.**<br>
     * **aliasing git visual to run gitk**<br>
         * **`git config --global alias.visual '!gitk'`**<br>
+## [To remove a submodule you need to](https://stackoverflow.com/questions/1260748/how-do-i-remove-a-submodule)
+* **Delete the relevant section from the `.gitmodules` file.**<br>
+* **Stage the `.gitmodules` changes:**<br>
+    * **`git add .gitmodules`**<br>
+* **Delete the relevant section from `.git/config`.**<br>
+* **Remove the submodule files from the working tree and index:**<br>
+    * **`git rm --cached path_to_submodule`(no trailing slash).**<br>
+* **Remove the submodule's `.git` directory:**<br>
+    * **`rm -rf .git/modules/path_to_submodule`**<br>
+* **Commit the changes:**<br>
+    * **`git commit -m "Removed submodule <name>"`**<br>
+* **Delete the now untracked submodule files:**<br>
+    * **`rm -rf path_to_submodule`**<br>
