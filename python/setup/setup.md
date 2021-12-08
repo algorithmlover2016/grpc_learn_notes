@@ -1,4 +1,4 @@
-# [demo of setup.py by reading dependencies from requirements.txt](https://stackoverflow.com/questions/32688688/how-to-write-setup-py-to-include-a-git-repository-as-a-dependency)
+# [demo of setup.py by reading dependencies from requirements.txt](https://newbedev.com/how-to-write-setup-py-to-include-a-git-repository-as-a-dependency)
 
 ```
 from setuptools import setup, find_packages
@@ -39,6 +39,7 @@ setup(
 )
 ```
 # [demo of setup.py by coding](https://stackoverflow.com/questions/15724093/difference-between-python-setup-py-install-and-pip-install/15731459#15731459)
+* **[Differences between python setup.py install and pip install <package_name>](https://stackoverflow.com/questions/32688688/how-to-write-setup-py-to-include-a-git-repository-as-a-dependency)**<br>
 ```
 from setuptools import setup, find_packages
 

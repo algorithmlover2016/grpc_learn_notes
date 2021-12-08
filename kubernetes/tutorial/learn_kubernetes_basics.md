@@ -54,9 +54,23 @@ curl http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/
     * **A container runtime (like Docker) responsible for pulling the container image from a registry, unpacking the container, and running the application.**<br>
 ### **[command](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)**
 * **kubectl get:**<br>
-***`kubectl get pods`***
+    * ***`kubectl get all`***<br>
+    * ***`kubectl get pods -o wide`***<br>
+    * **get all service resources in a yaml file**<br>
+    `kubectl get service service_name -n your_namespace -o yaml > service_name.yaml`<br>
+    `kubectl get service --all-namespaces -o yaml > all-service.yaml`<br>
+    * **get deployment yaml file**<br>
+    `kubectl get deployment deployment_name -n default -o yaml > deployment.yaml`<br>
+    `kubectl get deployment --all-namespaces -o yaml > all_deployments.yaml`<br>
+    `kubectl get deploy --all-namespaces -o yaml > all_deployments.yaml`<br>
+    * **get pod yaml file**<br>
+    `kubectl get pods pod_name -n default -o yaml > pod_name.yaml`<br>
+    * **get daemonset yaml file**<br>
+    `kubectl get daemonsets daemonset_name -n default -o yaml > daemonset_name.yaml`<br>
+
 * **kubectl describe**<br>
-***`kubectl describe pods`***
+    * ***`kubectl describe pods`***<br>
+
 * **kubectl logs:**<br>
     ```
     # Note: We don’t need to specify the container name, because we only have one container inside the pod.
@@ -113,3 +127,17 @@ kubectl exec -it $POD_NAME -n $namespace -- /bin/bash
 # Opening a shell when a Pod has more than one container
 kubectl exec -i -t my-pod --container main-app -- /bin/bash
 ```
+
+* **[kubectl api-*](https://blog.csdn.net/weixin_39926739/article/details/111764289)**<br>
+    * **查看K8S所支持API版本**<br>
+    `kubectl api-versions`
+
+    * **查看K8S所有资源类型**<br>
+    `kubectl api-resources`
+
+* **[kubectl explain]()**
+    * **pods.spec**<br>
+    ```
+    kubectl explain pods.spec
+    kubectl explain pods.spec.containers
+    ```
