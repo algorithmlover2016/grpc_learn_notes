@@ -9,6 +9,4 @@
 	* **start ssh-agent in background**<br>
 	**`eval "$(ssh-agent -s)"`
 	* **add ssh private key to the ssh-agent**<br>
-	**`ssh-add ${the_filepath_of_private_key}"
-
-
+	**`ssh-add ${the_filepath_of_private_key}`"
