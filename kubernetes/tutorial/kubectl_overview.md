@@ -6,7 +6,7 @@
 ## Syntax:<br>
 * **format**<br>
 `kubectl [command] [TYPE] [NAME] [flags]`
-    * **command**: Specifies the operation<br>
+    * **command**: Specifies the [operations](https://kubernetes.io/docs/reference/kubectl/overview/#operations)<br>
     * **TYPE**:<br>
         * **Specifies the [resource type](https://kubernetes.io/docs/reference/kubectl/overview/#resource-types)**<br>
         * **Case-insensitive, singular, plural, or abbreviated forms**<br>
