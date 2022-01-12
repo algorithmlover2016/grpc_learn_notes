@@ -26,5 +26,5 @@ ch.setLevel(logging.DEBUG)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-logging.debug("I am sent to standard out.")
+logging.debug("I am sent to standard out. by logging")
 logger.debug("I am sent to standard out.")
