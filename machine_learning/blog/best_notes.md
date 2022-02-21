@@ -24,6 +24,10 @@
     * [yolov5损失函数的几点理解](https://blog.csdn.net/tpz789/article/details/108844004)<br>
 * [物体检测之YOLOv3](https://zhuanlan.zhihu.com/p/42865896)<br>
 ## [重读FPN（Feature Pyramid Network）](https://zhuanlan.zhihu.com/p/460738972)
+## **BERT**
+* [词向量之BERT](https://zhuanlan.zhihu.com/p/48612853)<br>
+* [多模态预训练ViLBERT](https://zhuanlan.zhihu.com/p/449421886)<br>
+* [BERT魔改II之BERT-WWM，SpanBERT，BART，MASS](https://zhuanlan.zhihu.com/p/430853441)<br>
 
 # **basic ml mathematics knowledge**<br>
 ## [向量范数与矩阵范数](https://zhuanlan.zhihu.com/p/35897775)<br>
