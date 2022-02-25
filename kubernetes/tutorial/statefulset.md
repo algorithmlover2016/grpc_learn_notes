@@ -138,3 +138,252 @@ spec:
 * [Stable Storage](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage)
 
 ## [Statefulset basics](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/)
+### [Creating a StatefulSet](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#creating-a-statefulset)
+**The example creates a headless Service, `nginx`, to publish the IP addresses of Pods in the StatefulSet, `web`.**<br>
+* First, create a headless service, named `nginx`, to publish IP address<br>
+* Second, create a statefulset, named `web`.
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: k8s.gcr.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+```
+### Do some operation
+* Watch the creation of the statefulset's pods<br>
+`kubectl get pods -w -l app=nginx`
+`kubectl get pods -l app=nginx`
+
+* Delete pods in a label<br>
+`kubectl delete pod -l app=nginx`
+
+* Login to pod<br>
+`kubectl exec -it pod_name -- /bin/bash`
+
+* create the service or statefulset defined in yaml<br>
+`kubectl apply -f file_name.yaml`
+
+* Get service in kubernetes<br>
+`kubectl get service service_name`
+
+* Get statefulset in kubernetes<br>
+`kubectl get statefulset statefulset_name`
+
+* Execute shell command in pods<br>
+    * Get hostname<br>
+    ```sh
+        for i in 0 1;
+        do
+            kubectl exec "statefulset_name-$i" -- sh -c 'hostname';
+        done
+
+        for i in 0 1; # index
+        do
+            kubectl exec "statefulset_name-$i" -- sh -c 'echo "$(hostname)" > /usr/share/nginx/html/index.html';
+        done
+
+        for i in 0 1; # index
+        do
+            kubectl exec -i -t "statfulset_name-$i" -- curl http://localhost/;
+        done
+    ```
+    * Open a terminal to run sh command<br>
+    ```sh
+        # create a new shell
+        kubectl run -i --tty --image busybox:1.28 dns-test --restart=Never --rm /bin/sh
+        # and when entering the new shell terminal, can do sh command
+        nslookup pod_name
+        # after do your jobs, to exit
+        exit
+    ```
+
+    * Get container image<br>
+    ```sh
+        for i in 0 1; # the number of pods in a statefulset
+        do
+            kubectl get pod $statefulset_name-$i --template '{{range $i, $c := .spec.containers}}{{$c.image}}{{end}}';
+            echo;
+        done
+    ```
+
+* Get PersistentVolumeClaims(PVC)<br>
+`kubectl get pvc`
+`kubectl get pvc -l app=nginx`
+
+
+* Scaling a StatefulSet<br>
+    * **kubectl scale**<br>
+        * scale by parameters<br>
+        `kubectl scale sts $statefulset_name --replicas=$new_int_number` # sts is an abbreviation for statefulset
+    * **kubectl patch**<br>
+        * scale by parameters<br>
+        `kubectl patch sts $statefulset_name -p '{"spec":{"replicas":3}}`
+    * **How add pods**<br>
+        * The StatefulSet controller created each Pod sequentially with respect to its ordinal index, and it waited for each Pod's predecessor to be Running and Ready before launching the subsequent Pod.
+    * **Ordered Pod Termination**<br>
+        * The controller deleted one Pod at a time, in reverse order with respect to its ordinal index, and it waited for each to be completely shutdown before deleting the next.<br>
+    * **Caution**:<br>
+        * The PersistentVolumes mounted to the Pods of a StatefulSet are not deleted when the StatefulSet's Pods are deleted.<br>
+        * This is still true when Pod deletion is caused by scaling the StatefulSet down<br>
+
+* Updating StatefulSets<br>
+    * **strategies**<br>
+        * **The strategy used is determined by the `spec.updateStrategy` field of the StatefulSet API**<br>
+        * **Valid update strategies**<br>
+            * **`RollingUpdate`**<br>
+            * **`OnDelete`**<br>
+                * Not automatically update Pods when a modification is made to the StatefulSet's `.spec.template` field.
+                * This strategy can be selected by setting the `.spec.template.updateStrategy.type` to `OnDelete`<br>
+    * **Rolling update**<br>
+    The `RollingUpdate` update strategy will update all Pods in a StatefulSet, in reverse ordinal order, while respecting the StatefulSet guarantees.<br>
+        * Apply the `RollingUpdate` update strategy<br>
+        `kubectl patch statefulset $statefulset_name -p '{"spec":{"updateStrategy":{"type":"RollingUpdate"}}}'`
+        * Change container image<br>
+        `kubectl patch statefulset $statefulset_name --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value":"gcr.io/google_containers/nginx-slim:0.8"}]'`
+
+* Staging an Update<br>
+A staged update will keep all of the Pods in the StatefulSet at the current version while allowing mutations to the StatefulSet's `.spec.template`.<br>
+    * The ordinal of the Pod which is less than the `partition` specified by the updateStrategy will keep its original configuration if it is deleted or otherwise terminated.<br>
+    * The ordinal of the Pod which is larger than or equal to the `partition` specified by the updateStrategy will apply the change.<br>
+    * Set `partition` parameter of the `RollingUpdate` Strategy<br>
+    `kubectl patch statefulset $statefulset_name -p '{"spec":{"updateStrategy":{"type":"RollingUpdate","rollingUpdate":{"partition":$int_num}}}}'`
+        * By set  `partition` from large number to small number, we can implement Phased Roll Outs.<br>
+            * First set to a larger number because updating from end to front.<br>
+            `kubectl patch statefulset $statefulset_name -p '{"spec":{"updateStrategy":{"type":"RollingUpdate","rollingUpdate":{"partition":$larger_int_num}}}}'`
+            * Second set to a smaller number because updating from end to front.<br>
+            `kubectl patch statefulset $statefulset_name -p '{"spec":{"updateStrategy":{"type":"RollingUpdate","rollingUpdate":{"partition":$smaller_int_num}}}}'`
+            * Finally set to 0 to update all pods because updating from end to front.<br>
+            `kubectl patch statefulset $statefulset_name -p '{"spec":{"updateStrategy":{"type":"RollingUpdate","rollingUpdate":{"partition":0}}}}'`
+
+* Deleting StatefulSets<br>
+    * Non-Cascading Delete, the StatefulSet's Pods are not deleted when the StatefulSet is deleted.<br>
+    Supply the `--cascade=orphan` parameter to the command. This parameter tells Kubernetes to only delete the StatefulSet, and to not delete any of its Pods.
+    `kubectl delete statefulset $statefulset_name --cascade=orphan`
+        * As the `$statefulset_name` StatefulSet has been deleted, `$statefulset_name-$ordinal_idx` has not been relaunched if it is delete or terminated.<br>
+        ```sh
+        kubectl delete statefulset web --cascade=orphan
+        kubectl delete pod web-0 # after delete the pod, it will not automatically recreated because its statefulset has been delete.
+        kubectl apply -f web.yaml # if we apply the yaml again which means we will create the statefulset again.
+        # The pods belonging to the statefulset will be scheduled again, and the deleted or terminated pods will be created again without manually operations.
+        ```
+    * In a Cascading Delete, both the StatefulSet and its Pods are deleted.<br>
+    `kubectl delete statefulset $statefulset_name`
+    `kubectl delete -f file_name.yaml`
+
+    * **Caution**:<br>
+        * If we delete statefulset by `kubectl detele statefulset $statefulset_name`, we have deleted the statefulset service manually when we need ***clean up***<br>
+        `kubectl delete service $service_name_generated_by_statefulset`
+        `kubectl delete svc $service_name_generated_by_statefulset`
+
+### [Pod Management Policy](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#pod-management-policy)
+* **By set parameter `.spec.podManagementPolicy`**<br>
+* **`OrderedReady`(Default)**<br>
+* **`Parallel**<br>
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  podManagementPolicy: "Parallel"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: k8s.gcr.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
