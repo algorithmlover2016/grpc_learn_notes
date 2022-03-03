@@ -308,7 +308,7 @@ A staged update will keep all of the Pods in the StatefulSet at the current vers
         # The pods belonging to the statefulset will be scheduled again, and the deleted or terminated pods will be created again without manually operations.
         ```
     * In a Cascading Delete, both the StatefulSet and its Pods are deleted.<br>
-    `kubectl delete statefulset $statefulset_name`
+    `kubectl delete statefulset $statefulset_name`<br>
     `kubectl delete -f file_name.yaml`
 
     * **Caution**:<br>
