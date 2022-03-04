@@ -2,6 +2,16 @@
 * **git checkout -b branchName origin/remote_branch_name**<br>
 * **git checkout filename**<br>
 * **git checkout branchName**<br>
+* **git checkout specific files from other branch**<br>
+    * First checkout to the branch you're merging into<br>
+    `git checkout merging_into_branch_name`
+    * To update the working tree with files or directories from another branch, you can use the branch name pointer<br>
+    `git checkout <branch_name> -- <paths>`
+    * Update the working tree with files from a tree-ish<br>
+    `git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>`
+    * **Caution:**<br>
+        * When `paths` or `--patch` are given, git checkout does not switch branches.<br>
+        * It updates the named paths in the working tree from the index file or from a named <tree-ish> (most often a commit)…<br>
 
 # **[git switch](https://git-scm.com/docs/git-switch)**
 * **Switch to a specified branch**<br>
