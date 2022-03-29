@@ -7,6 +7,9 @@ apt update
 apt install python3.9
 # cd /usr/bin; rm -rf python3 && ln -s python3.9 python3
 update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+update-alternatives --install /usr/bin/python3 python3 /root/anaconda3/envs/planercnn1/bin/python3.7 2
+# reference to https://blog.csdn.net/l1216766050/article/details/82796409
+# update-alternatives --config python
 ```
 
 # [install pip3 for python3.9](https://stackoverflow.com/questions/65644782/how-to-install-pip-for-python-3-9-on-ubuntu-20-04)
