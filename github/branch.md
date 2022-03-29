@@ -23,3 +23,12 @@ git branch -d -r origin/branch_name # delete remote branch
 git reset --hard [orgin/remote_branch_name]
 git branch -u origin/remote_branch_name
 ```
+
+## **[git create a new branch in local and push to remote](https://blog.csdn.net/huangjw_806/article/details/78297851)
+```sh
+git checkout -b new_branch_name
+# create new_bracnh_name in remote
+git push origin new_branch_name
+# bind the local branch name into remote branch
+git branch --set-upstream-to=origin/new_branch_name new_branch_name
+```
