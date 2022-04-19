@@ -31,7 +31,7 @@ Kubernetes doesn't impose any constraints on the type name. However, if you are 
 
 ### Opaque secrets:
 When you create a Secret using kubectl, you will use the generic subcommand to indicate an ***`Opaque`*** Secret type.<br>
-```
+```sh
 # creates an empty Secret of type Opaque
 kubectl create secret generic empty-secret
 ```
@@ -39,7 +39,7 @@ kubectl create secret generic empty-secret
 ### Service account token Secrets:
 When using this Secret type, you need to ensure that the ***`kubernetes.io/service-account.name`*** annotation is set to an existing service account name.<br>
 A Kubernetes controller fills in some other fields such as the ***`kubernetes.io/service-account.uid`*** annotation and the token key in the data field set to actual token content.<br>
-```
+```yaml
 # declares a service account token Secret:
 apiVersion: v1
 kind: Secret
@@ -70,7 +70,7 @@ You can use one of the following type values to create a Secret to store the cre
     and it verifies if the value provided can be parsed as a valid JSON.<br>
     The API server doesn't validate if the JSON actually is a Docker config file.<br>
 
-```
+```sh
 # use kubectl to create a Docker registry Secret, you can do:
 kubectl create secret docker-registry secret-tiger-docker \
   --docker-username=tiger \
@@ -81,7 +81,7 @@ kubectl create secret docker-registry secret-tiger-docker \
 
 ### Basic authentication Secret:
 When using this Secret type, the data field of the Secret must contain the following two keys:<br>
-```
+```yaml
 username: the user name for authentication;
 password: the password or token for authentication.
 ```
@@ -89,7 +89,7 @@ password: the password or token for authentication.
 * Both values for the above two keys are **base64** encoded strings.<br>
 * You can, of course, provide the clear text content using the ***`stringData`*** for Secret creation.<br>
 
-```
+```yaml
 # an example config for a basic authentication Secret:
 apiVersion: v1
 kind: Secret
@@ -103,7 +103,7 @@ stringData:
 
 ### SSH authentication secrets:
 When using this Secret type, you will have to specify a ssh-privatekey key-value pair in the ***`data`*** (or ***`stringData`***) field as the SSH credential to use.<br>
-```
+```yaml
 # an example config for a SSH authentication Secret:
 apiVersion: v1
 kind: Secret
@@ -121,7 +121,7 @@ data:
 
 ### TLS secrets:
 When using this type of Secret, the tls.key and the tls.crt key must be provided in the ***`data`*** (or ***`stringData`***) field of the Secret configuration, although the API server doesn't actually validate the values for each key.<br>
-```
+```yaml
 # an example config for a TLS Secret
 apiVersion: v1
 kind: Secret
@@ -136,7 +136,7 @@ data:
         MIIEpgIBAAKCAQEA7yn3bRHQ5FHMQ ...
 ```
 When creating a TLS Secret using kubectl, you can use the tls subcommand as shown in the following example:<br>
-```
+```sh
 kubectl create secret tls my-tls-secret \
   --cert=path/to/cert/file \
   --key=path/to/key/file
@@ -148,7 +148,7 @@ kubectl create secret tls my-tls-secret \
 
 ### Bootstrap token Secrets:
 A bootstrap token Secret is usually created in the kube-system namespace and named in the form bootstrap-token-<token-id> where <token-id> is a 6 character string of the token ID.<br>
-```
+```yaml
 # As a Kubernetes manifest, a bootstrap token Secret might look like the following:
 apiVersion: v1
 kind: Secret
@@ -174,7 +174,7 @@ A bootstrap type Secret has the following keys specified under data:<br>
 * auth-extra-groups: A comma-separated list of group names that will be authenticated as in addition to the system:bootstrappers group.
 
 The above YAML may look confusing because the values are all in **base64** encoded strings. In fact, you can create an identical Secret using the following YAML:<br>
-```
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -198,7 +198,7 @@ stringData:
 ## [Managing Secrets using kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
 
 ### Create a Secret:
-```
+```sh
 # a database connection string consists of a username and password.
 # You can store the username in a file ./username.txt and the password in a file ./password.txt on your local machine.
 
@@ -231,7 +231,7 @@ kubectl create secret generic db-user-pass \
 ```
 
 ### Verify the Secret:
-```
+```sh
 # Check that the Secret was created
 kubectl get secrets
 
@@ -240,7 +240,7 @@ kubectl describe secrets/db-user-pass
 ```
 
 #### Decoding the Secret:
-```
+```sh
 # To view the contents of the Secret you created, run the following command:
 kubectl get secret db-user-pass -o jsonpath='{.data}'
 
@@ -249,7 +249,7 @@ echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
 ```
 
 ### Clean Up:
-```
+```sh
 kubectl delete secret db-user-pass
 ```
 
@@ -265,7 +265,7 @@ The Secret resource contains two maps:<br>
 ***Notes:***<br>
 * The keys of ***`data`*** and ***`stringData`*** must consist of alphanumeric characters, -, _ or ..<br>
         
-```
+```sh
 # to store two strings in a Secret using the data field, convert the strings to **base64** as follows:
 echo -n 'admin' | base64
 # The output is similar to: YWRtaW4=
@@ -294,7 +294,7 @@ For certain scenarios, you may wish to use the ***`stringData`*** field instead.
 This field allows you to put a **non-base64** encoded string directly into the Secret, and the string will be encoded for you when the Secret is created or updated.<br>
 
 #### Configuration file demo:
-```
+```yaml
 # if your application uses the following configuration file:
 apiUrl: "https://my.api.com/api/v1"
 username: "<user>"
@@ -318,19 +318,19 @@ stringData:
 * If a field, such as username, is specified in both ***`data`*** and ***`stringData`***, the value from ***`stringData`*** is used.
 
 #### Create the Secret object:
-```
+```sh
 kubectl apply -f ./secret.yaml
 ```
 
 ### Check the Secret:
 ***Note:***<br>
 * The ***`stringData`*** field is a write-only convenience field. It is never output when retrieving Secrets.
-```
+```sh
 kubectl get secret mysecret -o yaml
 ```
 
 ### Clean Up:
-```
+```sh
 kubectl delete secret mysecret
 ```
 
@@ -344,7 +344,7 @@ You can generate a Secret by defining a secretGenerator in a "kustomization.yaml
 * providing .env files.<br>
 
 #### Demo:
-```
+```yaml
 # the following kustomization file references the ./username.txt and the ./password.txt files:
 secretGenerator:
 - name: db-user-pass
@@ -367,13 +367,13 @@ secretGenerator:
 ```
 
 #### Create the Secret:
-```
+```sh
 # Apply the directory containing the kustomization.yaml to create the Secret.
 kubectl apply -k .
 ```
 
 ### Check the Secret created:
-```
+```sh
 # check that the secret was created
 kubectl get secrets
 # if The output is similar to:
