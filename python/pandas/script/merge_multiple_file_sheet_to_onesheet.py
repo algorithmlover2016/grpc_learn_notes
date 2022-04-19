@@ -83,6 +83,10 @@ def main():
     output_path.rename(output_path_final)
 
 if __name__ == "__main__":
+    # python .\merge_multiple_file_sheet_to_onesheet.py
+    # python .\merge_multiple_file_sheet_to_onesheet.py "Beijing"
+    # python .\merge_multiple_file_sheet_to_onesheet.py "Shanghai"
+    # the xlsx file should be located in ../*.xlsx
     if len(sys.argv) > 1:
         target_city_tmp = sys.argv[1].strip()
         if len(target_city_tmp) > 0:
