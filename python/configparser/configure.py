@@ -21,6 +21,8 @@ del config
 config = configparser.ConfigParser()
 print(config.sections())
 
+# to avoid case-insensetive add the following code.
+config.optionxform = str
 config.read('example.ini')
 
 print(config.sections())
