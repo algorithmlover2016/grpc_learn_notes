@@ -49,3 +49,9 @@ __pycache__
 
 # download data
 data/
+
+# input data files
+*.csv
+*.txt
+*.ini
+*.cfg
