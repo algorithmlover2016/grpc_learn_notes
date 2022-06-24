@@ -9,7 +9,8 @@ sys.path.insert(0, os.path.dirname(os.getcwd()))
 import alphashape
 import pdb
 
-pdb.set_trace()
+# pdb.set_trace()
+# https://pypi.org/project/alphashape/
 
 points_2ds = [
             [(0., 0.), (0., 1.), (1., 1.), (1., 0.), (0.5, 0.25), (0.5, 0.75), (0.25, 0.5), (0.75, 0.5)],
