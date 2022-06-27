@@ -29,7 +29,7 @@ for month in range(1, 13):
     print(f"Month: {month}")
     print("Mo  Tu  We  Th  Fr  Sa  Su")
     last_day = monthrange(year, month)[1]
-    logging.debug(f"last day is {last_day} when in {month} of {year}")
+    # logging.debug(f"last day is {last_day} when in {month} of {year}")
     output_str = ""
     for item in cal.itermonthdays4(year, month = month):
         if item[1] == month:
