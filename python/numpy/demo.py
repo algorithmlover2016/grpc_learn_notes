@@ -40,3 +40,39 @@ point_nearby_val = random_arr[tuple(box_point_transpose)]
 print(point_nearby_val)
 val = point_nearby_val > 0.5
 print("points: ",  point_nearby_val[val])
+
+
+from tempfile import TemporaryFile
+outfile = TemporaryFile()
+x1 = np.random.rand(10, 10)
+
+x2 = np.random.rand(10, 1)
+ans = [x1, x2]
+np.savez("./ans.npz", x1=x1, x2 = x2)
+load_ans = np.load("./ans.npz")
+print([load_ans.keys()])
+print(load_ans['x1'].shape)
+print(load_ans['x2'].shape)
+
+data = [np.arange(100).reshape(20, 5), np.arange(120).reshape(30, 4)]
+np.savez("./data.npz", *data)
+
+container = np.load("./data.npz")
+print(type(container), len(container))
+load_data = []
+for key in container:
+    print("key with npz:", key)
+    print(container[key].shape)
+    load_data.append(container[key])
+
+import pickle
+
+data = [np.arange(100).reshape(20, 5), np.arange(120).reshape(30, 4)]
+with open("./data.pkl", 'wb') as outfile:
+    pickle.dump(data, outfile, pickle.HIGHEST_PROTOCOL)
+
+with open("./data.pkl", 'rb') as infile:
+    pkl_load_data = pickle.load(infile)
+print(type(pkl_load_data))
+for ele in pkl_load_data:
+    print(ele.shape)
