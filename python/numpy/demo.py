@@ -76,3 +76,60 @@ with open("./data.pkl", 'rb') as infile:
 print(type(pkl_load_data))
 for ele in pkl_load_data:
     print(ele.shape)
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import skimage.io
+PLTOPTS = {"color": "#33FFFF", "s": 15, "edgecolors": "none", "zorder": 5}
+cmap = plt.get_cmap("jet")
+norm = mpl.colors.Normalize(vmin=0.9, vmax=1.0)
+sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+sm.set_array([])
+
+
+def c(x):
+    return sm.to_rgba(x)
+
+def plot():
+    import pdb
+    # pdb.set_trace()
+    imname = "./xiaoxingfu-2.png"
+    im = skimage.io.imread(imname)
+    if im.ndim == 2:
+        im = np.repeat(im[:, :, None], 3, 2)
+    im = im[:, :, :3]
+
+    load_ans = np.load("./lcnn_data.npz")
+    nlines, nscores = load_ans['nlines'], load_ans['nscores']
+    print(nlines.shape, nscores.shape)
+    for i, t in enumerate([0.99, 0.991, 0.992, 0.993, 0.994, 0.995, 0.996, 0.997, 0.998, 0.999]):
+        plt.gca().set_axis_off()
+        plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+        plt.margins(0, 0)
+        plt.imshow(im)
+        for (a, b), s in zip(nlines, nscores):
+            if s < t:
+                continue
+            plt.plot([a[1], b[1]], [a[0], b[0]], c=c(s), linewidth=2, zorder=s)
+            plt.scatter(a[1], a[0], **PLTOPTS)
+            plt.scatter(b[1], b[0], **PLTOPTS)
+        plt.gca().xaxis.set_major_locator(plt.NullLocator())
+        plt.gca().yaxis.set_major_locator(plt.NullLocator())
+        plt.savefig(imname.replace(".png", f"-{t:.04f}.svg"), bbox_inches="tight")
+        plt.show()
+
+plot()
+
+
+# np.select
+aa = np.random.rand(13, 7)
+score = np.random.rand(13, 1)
+bb = np.select([score > 0.5], [aa])
+# same to bb = np.select([score > 0.5], [aa], 0)
+print(bb)
+bb = np.select([score > 0.5], [aa], None)
+# same to bb = np.select([score > 0.5, score <= 0.5], [aa, None])
+print(bb)
+
+bb = aa[(score > 0.5).flatten()]
+print(bb)
