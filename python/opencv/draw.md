@@ -1,6 +1,7 @@
 # [cv2.draw](https://segmentfault.com/a/1190000015585635)<br>
 ## [draw line]<br>
 ```py
+# refer to https://machinelearningknowledge.ai/quick-guide-for-drawing-lines-in-opencv-python-using-cv2-line-with-examples/#Line_in_OpenCV_Python_cv2line
 # cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])
 import numpy as np
 import cv2
