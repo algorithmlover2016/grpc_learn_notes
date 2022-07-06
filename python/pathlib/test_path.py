@@ -45,3 +45,9 @@ print(list(entry for entry in leetcodeCppFiles.iterdir() if entry.is_file()))
 print(list(entry for entry in leetcodeCppFiles.iterdir() if entry.is_dir()))
 
 print(Path.cwd(), Path.home())
+
+for path in sorted(Path(__file__).parent.parent.glob(f"*")):
+    if path.is_dir():
+        print("folder: ", path)
+    elif path.is_file():
+        print("file: ", path)
