@@ -115,6 +115,8 @@ def plot():
             plt.scatter(b[1], b[0], **PLTOPTS)
         plt.gca().xaxis.set_major_locator(plt.NullLocator())
         plt.gca().yaxis.set_major_locator(plt.NullLocator())
+        # plt.gca().invert_yaxis()
+        # plt.gca().invert_xaxis()
         plt.savefig(imname.replace(".png", f"-{t:.04f}.svg"), bbox_inches="tight")
         plt.show()
 
