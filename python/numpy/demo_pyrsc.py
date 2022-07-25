@@ -26,15 +26,15 @@ for filename in ["./points_222-depth_k.npz", "./points_333-depth_k.npz"]:
         points = points[best_inliers]
     print(f"final {filename}: {best_eq}, {best_inliers.shape}, {best_inliers.shape[0]/all_points_len * 100:.4f}")
     height, width = index.shape
-    points[:, 0] = np.rint(points[:, 0] / points[:, 2] * k + height / 2)
-    points[:, 1] = np.rint(points[:, 1] / points[:, 2] * k + width / 2)
+    points[:, 0] = np.rint(points[:, 0] / points[:, 2] * k + width / 2)
+    points[:, 1] = np.rint(points[:, 1] / points[:, 2] * k + height / 2)
     points = points[:, :-1].astype(int)
-    points[:, 0][points[:, 0] >= height] = height - 1
-    points[:, 1][points[:, 1] >= width] = width - 1
+    points[:, 0][points[:, 0] >= width] = width - 1
+    points[:, 1][points[:, 1] >= height] = height - 1
     print(points.shape)
     im = cv2.imread(f"{Path(filename).stem}.png")
     print(im.shape)
-    for y, x in points.tolist():
+    for x, y in points.tolist():
         im[y][x] = (255, 255, 255)
     cv2.imwrite(f"white_{Path(filename).stem}.png", im)
     # np.sqrt(sum((points - points.mean())**2)/points.shape[0] - 1)
