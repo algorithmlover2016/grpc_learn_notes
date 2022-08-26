@@ -2,7 +2,7 @@
 import torch
 
 # https://zhuanlan.zhihu.com/p/162144706
-index = torch.tensor([range(100)])
+index = torch.tensor([range(100)]) # torch.gather(tensor, dim, index)
 y = (index // 40).float()
 x = (index % 40).float()
 print(y, x)
