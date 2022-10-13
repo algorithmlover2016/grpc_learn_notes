@@ -54,6 +54,8 @@ int main() {
         std::cout << message << "\n";
         ;
     }
+    nums.erase(std::remove_if(std::begin(nums), std::end(nums), [](int n) {return (n == -6);}), std::end(nums));
+    std::for_each(std::begin(nums), std::end(nums), [](int n) {std::cout << n << ", ";});
     return 0;
 }
 
