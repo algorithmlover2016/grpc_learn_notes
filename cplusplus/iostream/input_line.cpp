@@ -31,7 +31,10 @@ int main() {
             } catch (std::invalid_argument const & ex) {
                 std::cout << "\nTo float [" << str << "] encounter " << ex.what() << "\n";
             } catch (std::out_of_range const & ex) {
+                std::cout << "\nTo float [" << str << "] encounter " << ex.what() << "\n";
                 continue;
+            } catch (...) {
+                std::exception_ptr ptr = std::current_exception();
             }
         }
         std::cout << "\n";
