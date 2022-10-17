@@ -16,7 +16,7 @@ int main() {
         if (inStrLine.empty()) {
             continue;
         }
-        std::cout << "input: " << inStrLine << "\n";
+        std::cout << "input [" << inStrLine << "]\n";
         std::stringstream ss(inStrLine);
         std::string str;
         while (ss >> str) {
