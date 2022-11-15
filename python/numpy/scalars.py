@@ -12,3 +12,6 @@ print(x)
 
 x = y.astype(int)
 print(x)
+
+x = np.array(list(map(round, y)))
+print(x)
