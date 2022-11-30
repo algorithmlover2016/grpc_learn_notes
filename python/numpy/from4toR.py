@@ -12,3 +12,9 @@ def rotation_matrix_from_array(float_array):
     q = quaternion_from_array(float_array)
     R = quaternion.as_rotation_matrix(q)
     return R
+
+# x is a b c d not normal vector
+def project(R, T, x):
+    Rx = R @ x
+    Rx_norm = np.linalg.norm(Rx, axis=0)
+    return (np.dot(T, Rx) / (Rx_norm ** 2) + 1) * Rx
