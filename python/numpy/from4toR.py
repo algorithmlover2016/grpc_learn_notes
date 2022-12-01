@@ -31,4 +31,5 @@ def trans(R0, T0, R1, T1, RD, TD):
     RD0 = np.insert(RD0, 3, values = np.asarray([0, 0, 0, 1]), axis = 0)
     RD1 = np.insert(RD1, 3, values = np.asarray([0, 0, 0, 1]), axis = 0)
     RDD = np.insert(RDD, 3, values = np.asarray([0, 0, 0, 1]), axis = 0)
-    return RD0, RD1, RDD
+
+    return np.linalg.inv(RD1) - RDD @ np.linalg.inv(RD0), RD0, RD1, RDD
