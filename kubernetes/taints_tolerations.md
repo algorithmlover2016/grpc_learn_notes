@@ -3,6 +3,7 @@
 ```sh
 # no pod will be able to schedule onto node1 unless it has a matching toleration.
 kubectl taint nodes node1 key1=value1:NoSchedule
+kubectl taint NODE NAME KEY_1=VAL_1:TAINT_EFFECT_1 ... KEY_N=VAL_N:TAINT_EFFECT_N
 
 # remove the taint added by the command above
 kubectl taint nodes node1 key1=value1:NoSchedule-
