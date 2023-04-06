@@ -1,0 +1,31 @@
+## [tutorial]()
+```yaml
+# To cause a pipeline to run whenever you push an update to a branch.
+trigger:
+- main
+
+strategy:
+  matrix:
+    jdk10_linux:
+      imageName: "ubuntu-latest"
+      jdkVersion: "1.10"
+    jdk11_windows:
+      imageName: "windows-latest"
+      jdkVersion: "1.11"
+  maxParallel: 2
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- task: Maven@4
+  inputs:
+    mavenPomFile: "pom.xml"
+    mavenOptions: "-Xmx3072m"
+    javaHomeOption: "JDKVersion"
+    jdkVersionOption: $(jdkVersion)
+    jdkArchitectureOption: "x64"
+    publishJUnitResults: true
+    testResultsFiles: "**/TEST-*.xml"
+    goals: "package"
+```
