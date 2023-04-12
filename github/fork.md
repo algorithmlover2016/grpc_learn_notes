@@ -57,3 +57,14 @@ git push origin {branch_name}
     # eg:
         git push origin main
 ```
+```sh
+# fork sync example:
+git clone https://github.com/algorithmlover2016/segment-anything.git
+cd segment-anything
+git remote add upstream https://github.com/facebookresearch/segment-anything.git
+git fetch upstream
+git checkout main
+git pull --rebase upstream main # git merge upstream main
+git pull
+git push origin main
+```
