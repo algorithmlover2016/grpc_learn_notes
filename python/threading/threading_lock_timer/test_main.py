@@ -17,5 +17,10 @@ if __name__ == "__main__":
     frame_info = inspect.currentframe()
     function_name = inspect.getframeinfo(frame_info).function
     logging.info(f"begin to run in {__file__}.{inspect.getframeinfo(frame_info).lineno}: {function_name}")
-    main()
+    for i in range(3):
+        logging.info(f"begin to run {i} times in {__file__}.{inspect.getframeinfo(frame_info).lineno}: {function_name}")
+        main()
+        time.sleep(2)
+        logging.info(f"end to run {i} times in {__file__}.{inspect.getframeinfo(frame_info).lineno}: {function_name}")
+        time.sleep(1)
     logging.info(f"end to run in {__file__}.{inspect.getframeinfo(frame_info).lineno}: {function_name}")

@@ -95,3 +95,13 @@ fi
 # https://docs.ros.org/en/galactic/Guides/Working-with-multiple-RMW-implementations.html
 
 rosdep install --from-paths src --ignore-src --rosdistro galactic -y --skip-keys "console_bridge fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers"
+
+# install glxinfo
+apt-get install mesa-utils
+# solve libGL error: No matching fbConfigs or visuals found
+# reference to
+export LIBGL_ALWAYS_INDIRECT=1
+sudo apt-get install -y mesa-utils libgl1-mesa-glx
+sudo apt-get update
+sudo apt-get install -y dbus
+# reference to http://marinerobotics.gtorg.gatech.edu/running-ros-with-gui-in-docker-using-windows-subsystem-for-linux-2-wsl2/
