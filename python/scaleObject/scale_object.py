@@ -1,5 +1,5 @@
 class ScaledObject:
-    def __init__(self, env, namespace):
+    def __init__(self, env = None, namespace = None):
         self.env = env
         self.namespace = namespace
         self._min_replica_count = 1
